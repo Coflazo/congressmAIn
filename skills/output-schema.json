@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MeetingSummary",
+  "description": "Structured output schema for a Dutch municipal council meeting summary. Use this as a starting point — adapt it to your needs.",
+  "type": "object",
+  "properties": {
+    "meeting": {
+      "type": "object",
+      "description": "Meeting metadata",
+      "properties": {
+        "municipality": { "type": "string", "description": "Name of the municipality" },
+        "date": { "type": "string", "format": "date", "description": "Meeting date (YYYY-MM-DD)" },
+        "start_time": { "type": "string", "description": "Start time (HH:MM)" },
+        "end_time": { "type": "string", "description": "End time (HH:MM), if known" },
+        "parties_present": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "seats": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "agenda_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "number": { "type": "integer", "description": "Agenda item number" },
+          "title": { "type": "string", "description": "Short title of the agenda item" },
+          "topic_summary": { "type": "string", "description": "One-sentence summary of what was discussed" },
+          "decision": {
+            "type": "string",
+            "enum": ["aangenomen", "verworpen", "aangehouden", "ingetrokken", "hamerstuk", "geen_stemming"],
+            "description": "Outcome of the vote"
+          },
+          "decision_detail": { "type": "string", "description": "Plain-language description of what was decided" },
+          "votes": {
+            "type": "object",
+            "properties": {
+              "for": { "type": "integer" },
+              "against": { "type": "integer" },
+              "abstentions": { "type": "integer" },
+              "unanimous": { "type": "boolean" },
+              "by_party": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "party": { "type": "string" },
+                    "vote": { "type": "string", "enum": ["for", "against", "abstention"] }
+                  }
+                }
+              }
+            }
+          },
+          "amendments": {
+            "type": "array",
+            "description": "Amendments to this agenda item, if any",
+            "items": {
+              "type": "object",
+              "properties": {
+                "submitted_by": { "type": "string" },
+                "description": { "type": "string" },
+                "decision": { "type": "string", "enum": ["aangenomen", "verworpen"] },
+                "votes_for": { "type": "integer" },
+                "votes_against": { "type": "integer" }
+              }
+            }
+          },
+          "motions": {
+            "type": "array",
+            "description": "Motions related to this agenda item, if any",
+            "items": {
+              "type": "object",
+              "properties": {
+                "submitted_by": { "type": "string" },
+                "description": { "type": "string" },
+                "decision": { "type": "string", "enum": ["aangenomen", "verworpen"] },
+                "votes_for": { "type": "integer" },
+                "votes_against": { "type": "integer" }
+              }
+            }
+          },
+          "resident_impact": { "type": "string", "description": "Plain-language explanation of what this means for residents" },
+          "cost": { "type": "string", "description": "Budget or cost mentioned, if any" }
+        }
+      }
+    },
+    "commitments": {
+      "type": "array",
+      "description": "Promises or commitments made by the college during the meeting",
+      "items": {
+        "type": "object",
+        "properties": {
+          "by": { "type": "string", "description": "Who made the commitment" },
+          "description": { "type": "string", "description": "What was promised" },
+          "deadline": { "type": "string", "description": "When it should be done, if mentioned" }
+        }
+      }
+    }
+  }
+}
