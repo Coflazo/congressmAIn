@@ -1,5 +1,4 @@
-# AI020 — Municipal Meeting Summarizer
-
+# AI020 
 **AISO x AI020 Gov Tech Mini-Hackathon**
 KIT Amsterdam · April 16, 2026 · 10:55 – 15:55
 
