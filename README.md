@@ -1,7 +1,7 @@
 # AI020 — Municipal Meeting Summarizer
 
 **AISO x AI020 Gov Tech Mini-Hackathon**
-KIT Amsterdam · April 16, 2026 · 3.5 hours
+KIT Amsterdam · April 16, 2026 · 10:55 – 15:55
 
 ---
 
@@ -11,10 +11,9 @@ Raadsvergadering (council meeting) minutes are public, but inaccessible. Session
 
 ## The Challenge
 
-Build a tool that takes a council meeting transcript and produces a clear, structured summary: what was decided, how people voted, and what it means for residents — in plain language.
+Build a comprehensive tool that makes Dutch council meetings accessible to residents. Not just a summary — a product that a gemeente or neighbourhood could actually use.
 
-**Input:** a transcript or PDF of a Dutch municipal council meeting
-**Output:** decisions, votes, and plain-language resident impact
+This means thinking about the full picture: how the document gets in, how the AI processes it, how the output is presented, and how a user actually interacts with it.
 
 ## Repo Structure
 
@@ -59,7 +58,7 @@ Drop the files from `skills/` into your AI tool's context. They contain domain k
 
 | Time | Activity |
 |------|----------|
-| 0:00 – 0:20 | Intro + team formation. Briefs distributed. Repo cloned. |
-| 0:20 – 2:30 | Build. Develop your prototype using AI coding tools. |
-| 2:30 – 3:00 | Polish. Demo flow, edge cases, pitch prep. |
-| 3:00 – 3:30 | Demos + judging. Each team presents for 3 minutes. |
+| 10:55 – 11:15 | Intro + team formation. Briefs distributed. Repo cloned. |
+| 11:15 – 14:45 | Build. Develop your prototype using AI coding tools. |
+| 14:45 – 15:15 | Polish. Demo flow, edge cases, pitch prep. |
+| 15:15 – 15:55 | Demos + judging. Each team presents for 3 minutes. |

@@ -15,40 +15,50 @@ This means local democracy is technically transparent, but functionally opaque.
 
 ## What You're Building
 
-A tool that takes a council meeting transcript and produces a **structured, plain-language summary**.
+A comprehensive tool that makes council meetings accessible to residents. Not just a summary — a product that someone at a gemeente or in a neighbourhood could actually use.
 
-For each agenda item, the summary should answer:
+Think about the full picture:
 
-1. **What was discussed?** (topic, in one sentence)
-2. **What was decided?** (the outcome)
-3. **How did they vote?** (for/against/abstain, by party if available)
-4. **What does this mean for residents?** (plain-language impact)
+### Getting the document in
+- How does a user provide the transcript? Upload a PDF? Paste text? Link to a gemeente website?
+- Can you handle messy real-world input — not just the clean sample?
 
-## Constraints
+### Understanding the content
+- Extract decisions, votes, amendments, motions, and commitments (toezeggingen)
+- Handle edge cases: failed motions, postponed items, procedural vs. substantive votes
+- Preserve accuracy — never invent information that isn't in the transcript
 
-- **Language:** Output must be in plain Dutch, understandable at B1 level (think: someone who recently learned Dutch, or a busy parent skimming on their phone)
-- **Accuracy:** Do not invent information. If the transcript doesn't mention a vote count, don't guess one.
-- **Structure:** Use the output schema in `skills/output-schema.json` as a starting point — you can adapt it.
-- **Completeness:** Cover all agenda items, not just the interesting ones.
+### Presenting the output
+- Make it browsable, not just a wall of text
+- Can a resident quickly find what affects them?
+- Think about: filtering by topic, searching by keyword, highlighting what's relevant to a specific neighbourhood
+- Vote visualisations, timelines, decision tracking
 
-## Input
+### Making it trustworthy
+- Can the reader trace a summary back to the original transcript?
+- How do you show what the AI is confident about vs. where the transcript was ambiguous?
 
-A text transcript of a Dutch municipal council meeting. See `sample-transcript.txt` in this folder.
+### Making it accessible
+- Plain Dutch (B1 level) — understandable by someone who recently learned Dutch
+- Multi-language output for a diverse city?
+- Mobile-friendly for someone checking on their phone?
 
-In a real product this could come from:
-- PDF minutes published on gemeente websites
-- Audio recordings transcribed with speech-to-text
-- Live streams with real-time transcription
+## The Sample
 
-For this hackathon, you're working with text input.
+Use `sample-transcript.txt` to develop and test your solution. Compare your output against `expected-output.md` for a reference of what the core summary should capture.
 
-## Output
+But a good solution goes beyond the sample — think about what happens when you throw a real, messy, 50-page transcript at it.
 
-A structured summary. See `expected-output.md` for an example of what good output looks like.
+## Skills / Context Files
+
+The `skills/` folder contains domain knowledge you can feed to your AI tool:
+
+- **`dutch-gov-structure.md`** — how Dutch municipal government works, roles, decision types, jargon
+- **`plain-language.md`** — guidelines for writing plain Dutch summaries
+- **`output-schema.json`** — a suggested structured output format (adapt it to your needs)
 
 ## Hints
 
-- Start with the prompt. Get the LLM to produce useful output from the sample transcript before worrying about UI.
-- The `skills/` folder has context files you can feed to the LLM — Dutch government structure, plain-language guidelines, and an output schema.
-- Think about who the user is: a resident who has 2 minutes and wants to know "did anything happen that affects me?"
-- Edge cases to consider: motions that fail, amendments, items that are postponed, procedural votes vs. substantive votes.
+- Start with the core: get the AI to produce useful, structured output from the sample transcript. Then build outward.
+- Think about who the user is. A resident who has 2 minutes and wants to know "did anything happen that affects me?" A journalist tracking how parties vote. A civil servant preparing a briefing.
+- The best solutions will feel like a product, not a demo.
