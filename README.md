@@ -1,6 +1,6 @@
 # AI020 — Municipal Meeting Summarizer
 
-**AISO x AI020 Civic Tech Mini-Hackathon**
+**AISO x AI020 Gov Tech Mini-Hackathon**
 KIT Amsterdam · April 16, 2026 · 3.5 hours
 
 ---
@@ -54,7 +54,7 @@ Drop the files from `skills/` into your AI tool's context. They contain domain k
 - **Does it work?** Can you demo it with the sample document?
 - **Is the output useful?** Would a resident or civil servant find real value in this?
 - **How did you direct the AI?** Show your prompt — was it clear, specific, well-structured?
-- **Pitch:** Can you explain the civic problem and your solution in 2 minutes?
+- **Pitch:** Can you explain the problem and your solution in 2 minutes?
 
 ## Timeline
 
