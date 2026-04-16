@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="nl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gemeenteraadsvergadering 14 Maart - AI020</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#831517",
+                        "on-secondary-fixed-variant": "#4e4726",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#eee2b7",
+                        "surface-tint": "#ab332f",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e5e2db",
+                        "on-primary-fixed": "#410003",
+                        "surface-container-low": "#f6f3ec",
+                        "tertiary": "#194b30",
+                        "on-primary-fixed-variant": "#8a1a1b",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#1e5035",
+                        "on-secondary-container": "#6b6340",
+                        "primary-fixed": "#ffdad6",
+                        "tertiary-container": "#326347",
+                        "on-tertiary-container": "#a8ddb9",
+                        "primary-fixed-dim": "#ffb3ac",
+                        "outline": "#8c716e",
+                        "surface": "#fcf9f2",
+                        "surface-container": "#f1eee7",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#ece0b4",
+                        "surface-bright": "#fcf9f2",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1c1c18",
+                        "secondary-fixed-dim": "#d2c69c",
+                        "outline-variant": "#dfbfbc",
+                        "surface-container-high": "#ebe8e1",
+                        "surface-dim": "#dcdad3",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#211b02",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#665e3c",
+                        "inverse-on-surface": "#f3f0e9",
+                        "inverse-primary": "#ffb3ac",
+                        "background": "#fcf9f2",
+                        "on-primary-container": "#ffc2bc",
+                        "on-tertiary-fixed": "#002110",
+                        "on-background": "#1c1c18",
+                        "primary-container": "#a42e2b",
+                        "tertiary-fixed-dim": "#9ed2af",
+                        "tertiary-fixed": "#b9efca",
+                        "inverse-surface": "#31312c",
+                        "on-surface-variant": "#58413f"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "serif": ["Newsreader", "serif"],
+                        "sans": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .font-serif { font-family: 'Newsreader', serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .prose-ink { line-height: 1.6; color: #1c1c18; }
+        .archival-hairline { border-bottom: 1px solid rgba(227, 223, 213, 0.4); }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- TopNavBar: Execution of Shared Component JSON -->
+<header class="fixed top-0 w-full h-[64px] z-50 bg-[#FCF9F2]/90 backdrop-blur-md border-b border-[#E3DFD5]/20 flex justify-center">
+<div class="flex justify-between items-center px-12 h-full w-full max-w-[1200px]">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-serif font-bold text-[#831517] tracking-tighter">AI020</span>
+<nav class="hidden md:flex items-center space-y-0 space-x-8 h-full">
+<a class="text-[#831517] border-b-2 border-[#831517] pb-1 font-bold text-base" href="#">Vergaderingen</a>
+<a class="text-stone-600 hover:text-stone-900 transition-colors duration-150 text-base" href="#">Abonnementen</a>
+<a class="text-stone-600 hover:text-stone-900 transition-colors duration-150 text-base" href="#">Over</a>
+<a class="text-stone-600 hover:text-stone-900 transition-colors duration-150 text-base" href="#">Admin</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-stone-600">
+<span class="material-symbols-outlined cursor-pointer hover:bg-[#F6F3EC] p-2 transition-colors">language</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-[#F6F3EC] p-2 transition-colors">settings</span>
+</div>
+<button class="bg-primary text-on-primary px-5 py-2 rounded-sm text-sm font-medium active:scale-95 transition-transform">Account</button>
+</div>
+</div>
+</header>
+<main class="pt-[64px] pb-24">
+<!-- Breadcrumb & Header Section -->
+<div class="max-w-[1200px] mx-auto px-12 pt-12">
+<nav class="mb-8">
+<ol class="flex items-center space-x-2 text-xs font-mono text-on-surface-variant uppercase tracking-widest">
+<li><a class="hover:text-primary" href="#">Vergaderingen</a></li>
+<li class="flex items-center space-x-2">
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface">Gemeenteraadsvergadering 14 Maart</span>
+</li>
+</ol>
+</nav>
+<div class="flex flex-col md:flex-row justify-between items-start gap-8 mb-12">
+<div class="max-w-3xl">
+<div class="flex items-center gap-3 mb-4">
+<span class="font-mono text-xs px-2 py-1 bg-secondary-container text-on-secondary-container rounded-sm">14 MAART 2024</span>
+<span class="font-mono text-xs text-on-surface-variant">19:00 - 22:30 CET</span>
+</div>
+<h1 class="text-5xl font-serif font-bold text-on-surface tracking-tight mb-4 leading-[1.1]">Gemeenteraadsvergadering: Huisvesting en Stedelijke Ontwikkeling</h1>
+<div class="flex items-center gap-6 text-sm text-on-surface-variant">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+                            Amsterdamse Gemeenteraad
+                        </span>
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">groups</span>
+                            24 Sprekers
+                        </span>
+</div>
+</div>
+<div class="flex items-center">
+<button class="flex items-center gap-2 text-primary border border-outline-variant px-6 py-3 rounded-sm hover:bg-surface-container-low transition-colors font-medium text-sm active:scale-95">
+<span class="material-symbols-outlined">download</span>
+                        Download PDF
+                    </button>
+</div>
+</div>
+<!-- Secondary Tab Strip -->
+<div class="archival-hairline flex items-center space-x-12 mb-16 overflow-x-auto no-scrollbar">
+<button class="pb-4 text-sm font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span> PDF
+                </button>
+<button class="pb-4 text-sm font-bold text-primary border-b-2 border-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span> Samenvatting
+                </button>
+<button class="pb-4 text-sm font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">record_voice_over</span> Wie zei wat
+                </button>
+<button class="pb-4 text-sm font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">gavel</span> Besluiten
+                </button>
+<button class="pb-4 text-sm font-medium text-on-surface-variant hover:text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px]">chat_bubble</span> Vraag AI
+                </button>
+</div>
+</div>
+<!-- Main Reading Canvas -->
+<div class="max-w-[680px] mx-auto px-6">
+<!-- Language Toggle & Meta Info -->
+<div class="flex justify-between items-center mb-10 pb-6 archival-hairline">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-xs font-mono text-tertiary uppercase tracking-tighter">AI-Generated Analysis</span>
+</div>
+<div class="flex bg-surface-container-high rounded-sm p-1">
+<button class="px-3 py-1 text-xs font-medium bg-surface text-on-surface rounded-sm">NL</button>
+<button class="px-3 py-1 text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors">EN</button>
+</div>
+</div>
+<!-- Key Points Callout -->
+<div class="bg-secondary-container/40 p-8 rounded-lg mb-12 border-l-4 border-primary">
+<h3 class="font-serif text-xl font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-weight="fill">lightbulb</span>
+                    Kernpunten van de vergadering
+                </h3>
+<ul class="space-y-4 prose-ink text-[16px]">
+<li class="flex items-start gap-4">
+<span class="font-mono text-xs text-primary mt-1.5">01</span>
+                        Focus op sociale woningbouw in de Sluisbuurt met een verhoogd quotum van 40%.
+                    </li>
+<li class="flex items-start gap-4">
+<span class="font-mono text-xs text-primary mt-1.5">02</span>
+                        Debat over verduurzaming van historische panden in de grachtengordel.
+                    </li>
+<li class="flex items-start gap-4">
+<span class="font-mono text-xs text-primary mt-1.5">03</span>
+                        Toewijzing van extra budget voor openbaar vervoer verbindingen naar Nieuw-West.
+                    </li>
+</ul>
+</div>
+<!-- Content Body -->
+<article class="prose-ink space-y-8">
+<section>
+<h2 class="text-2xl font-serif font-bold mb-4">Inleiding</h2>
+<p class="text-lg leading-relaxed">
+                        De vergadering werd geopend door burgemeester Halsema, waarbij de nadruk werd gelegd op de urgente woningnood en de noodzaak voor versnelde procedures in de stedelijke ontwikkeling. Er werd een overzicht gepresenteerd van de huidige status van de lopende projecten en de financiële kaders voor het komende kwartaal.
+                    </p>
+</section>
+<section>
+<h2 class="text-2xl font-serif font-bold mb-4">Sociale Woningbouw &amp; Sluisbuurt</h2>
+<p class="mb-4">
+                        Tijdens het eerste agendapunt werd uitgebreid gesproken over de herziening van de bouwplannen in de Sluisbuurt. Diverse fracties uitten hun zorgen over de betaalbaarheid voor middeninkomens. Een amendement om het percentage sociale huurwoningen te verhogen van 30% naar 40% werd na een intensief debat aangenomen.
+                    </p>
+<p>
+                        Wethouder Reinier van Dantzig benadrukte dat deze verschuiving impact zal hebben op de grondexploitatie, maar dat de maatschappelijke winst prevaleert boven directe financiële rendementen op de korte termijn.
+                    </p>
+</section>
+<section class="pt-12">
+<h2 class="text-2xl font-serif font-bold mb-8">Genomen Besluiten</h2>
+<div class="space-y-6">
+<!-- Decision Card 1 -->
+<div class="bg-surface-container-low p-6 border-l-2 border-primary group hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3 mb-3">
+<span class="font-mono text-[10px] text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-sm">B2024-03-14/01</span>
+<span class="material-symbols-outlined text-tertiary text-[16px]" data-weight="fill">check_circle</span>
+</div>
+<h4 class="font-bold mb-2">Verhoging Sociale Huur Quotum</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                                Goedkeuring voor de herziening van het bouwbesluit voor de Sluisbuurt (Zeeburgereiland) om een minimum van 40% sociale huur te waarborgen in alle nieuwe projecten vanaf Q3 2024.
+                            </p>
+</div>
+<!-- Decision Card 2 -->
+<div class="bg-surface-container-low p-6 border-l-2 border-primary group hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3 mb-3">
+<span class="font-mono text-[10px] text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-sm">B2024-03-14/02</span>
+<span class="material-symbols-outlined text-tertiary text-[16px]" data-weight="fill">check_circle</span>
+</div>
+<h4 class="font-bold mb-2">Mobiliteitsfonds Nieuw-West</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                                Toewijzing van €12,5 miljoen voor de verbetering van de fietsinfrastructuur en de realisatie van een nieuwe busbaan tussen Station Lelylaan en Sloterplas.
+                            </p>
+</div>
+</div>
+</section>
+</article>
+<!-- Footer Meta -->
+<div class="mt-24 pt-8 archival-hairline flex justify-between items-center text-xs font-mono text-on-surface-variant">
+<span>Versie 1.0 (AI Analyse)</span>
+<span>Gegenereerd op 15 Maart 2024, 08:42</span>
+</div>
+</div>
+</main>
+<!-- SideNavBar Suppression Rule applied: Page is focused detail view, nav hidden -->
+</body></html>

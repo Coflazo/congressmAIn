@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="{{ subscriber.language }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ meeting.title }}</title>
+    <style>
+      body { margin: 0; padding: 0; background: #f4f1ea; color: #1c1c18; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      table { border-collapse: collapse; }
+      .wrapper { width: 100%; background: #f4f1ea; padding: 32px 0; }
+      .container { width: 100%; max-width: 640px; margin: 0 auto; background: #ffffff; border: 1px solid #e3dfd5; }
+      .header { padding: 28px 32px; border-bottom: 1px solid #e3dfd5; text-align: center; }
+      .logo { max-width: 160px; height: auto; }
+      .content { padding: 32px; }
+      .eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; color: #665e3c; margin-bottom: 12px; }
+      h1 { font-family: Georgia, "Times New Roman", serif; font-size: 30px; line-height: 1.15; margin: 0 0 12px; color: #831517; }
+      .meta { font-size: 13px; color: #58413f; margin-bottom: 24px; }
+      .summary { font-size: 16px; line-height: 1.6; color: #1c1c18; margin-bottom: 24px; }
+      .decision-card { margin-bottom: 16px; padding: 16px; border-left: 4px solid #831517; background: #f9f7f1; }
+      .decision-title { font-weight: 700; font-size: 15px; margin-bottom: 8px; }
+      .decision-meta { font-size: 12px; color: #58413f; margin-bottom: 8px; }
+      .button { display: inline-block; padding: 14px 22px; background: #831517; color: #ffffff !important; text-decoration: none; border-radius: 4px; font-weight: 700; }
+      details { margin-top: 24px; border-top: 1px solid #e3dfd5; padding-top: 16px; }
+      summary { cursor: pointer; font-weight: 700; color: #665e3c; }
+      .quote { margin-top: 12px; padding: 12px; background: #fcf9f2; border: 1px solid #e3dfd5; font-size: 14px; line-height: 1.5; }
+      .footer { border-top: 1px solid #e3dfd5; padding: 24px 32px; font-size: 12px; line-height: 1.6; color: #58413f; text-align: center; }
+      a { color: #831517; }
+    </style>
+  </head>
+  <body>
+    <table role="presentation" class="wrapper" width="100%">
+      <tr>
+        <td align="center">
+          <table role="presentation" class="container" width="100%">
+            <tr>
+              <td class="header">
+                <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Logo_of_Gemeente_Amsterdam.svg/3840px-Logo_of_Gemeente_Amsterdam.svg.png" alt="Gemeente Amsterdam" />
+              </td>
+            </tr>
+            <tr>
+              <td class="content">
+                <div class="eyebrow">AI020 briefing</div>
+                <h1>{{ meeting.title }}</h1>
+                <div class="meta">
+                  {% if meeting.date %}Datum: {{ meeting.date }}{% endif %}
+                  {% if meeting.municipality %} · {{ meeting.municipality }}{% endif %}
+                </div>
+                {% if summary.agenda_items and summary.agenda_items[0].topic_summary %}
+                <p class="summary">{{ summary.agenda_items[0].topic_summary }}</p>
+                {% endif %}
+
+                {% for decision in decisions %}
+                <div class="decision-card">
+                  <div class="decision-title">{{ decision.title }}</div>
+                  <div class="decision-meta">
+                    Uitkomst: {{ decision.decision or "geen_stemming" }}
+                    {% if decision.votes %}
+                      {% if decision.votes.for is not none %} · Voor: {{ decision.votes.for }}{% endif %}
+                      {% if decision.votes.against is not none %} · Tegen: {{ decision.votes.against }}{% endif %}
+                      {% if decision.votes.abstentions is not none %} · Onthoudingen: {{ decision.votes.abstentions }}{% endif %}
+                    {% endif %}
+                  </div>
+                  <div>{{ decision.decision_detail }}</div>
+                  {% if decision.resident_impact %}
+                  <div style="margin-top: 8px;"><strong>Voor bewoners:</strong> {{ decision.resident_impact }}</div>
+                  {% endif %}
+                </div>
+                {% endfor %}
+
+                <p style="margin: 28px 0 20px;">
+                  <a class="button" href="{{ public_base_url }}/meetings/{{ meeting.id }}">Open op platform</a>
+                </p>
+                <p style="font-size: 14px; line-height: 1.5;">
+                  Antwoord op deze mail met een vraag over deze vergadering. AI020 zoekt het antwoord in de besproken stukken en citeert de gebruikte fragmenten.
+                </p>
+
+                <details>
+                  <summary>Wie zei wat</summary>
+                  {% for speaker in speakers %}
+                  <div class="quote">
+                    <strong>{{ speaker.speaker }}</strong>
+                    {% if speaker.party %} ({{ speaker.party }}){% endif %}
+                    {% if speaker.role and speaker.role != "raadslid" %} · {{ speaker.role }}{% endif %}
+                    {% for quote in speaker.quotes %}
+                    <div style="margin-top: 8px;">{{ quote }}</div>
+                    {% endfor %}
+                  </div>
+                  {% endfor %}
+                </details>
+              </td>
+            </tr>
+            <tr>
+              <td class="footer">
+                U ontvangt deze e-mail omdat u een actief abonnement heeft bij AI020.<br />
+                <a href="{{ unsubscribe_url }}">Afmelden</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

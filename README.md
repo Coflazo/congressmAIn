@@ -1,81 +1,173 @@
 # AI020 Meeting Summarizer
 
-Municipal Meeting Summarizer turns Dutch government meeting PDFs into structured, plain-language summaries for residents. The current stack is FastAPI + SQLite on the backend, LibreTranslate for multilingual output, and a frontend that will be added in later phases.
+AI020 turns Dutch government meeting PDFs into structured summaries, translated briefings, searchable speaker segments, and email digests.
 
-## Repo Structure
+## Stack
+
+- Backend: FastAPI, SQLAlchemy 2.x, Pydantic v2, SQLite, uv
+- AI: OpenAI SDK for structured chat/summarization when available, deterministic fallback when it is not
+- Translation: LibreTranslate in Docker
+- Email: Mailgun API when configured, otherwise HTML files in `emails/out/`
+- Frontend: Vite, React 18, TypeScript, TailwindCSS, Zustand, TanStack Query, react-i18next, `@react-pdf-viewer/core`
+
+## Repo Layout
 
 ```text
-backend/        FastAPI app, database models, routers, services
-brief/          Product brief, sample transcript, expected output
-infra/          Docker Compose for local services
-scripts/        Warmup, mock inbound email, email build helpers
-skills/         Dutch gov context, plain-language rules, output schema
-tests/          Backend test suite
-stitch/         Design source files for the frontend phase
+backend/     API, pipeline, models, services, scripts
+brief/       Product brief and transcript fixtures
+emails/      Jinja2 email templates and generated output
+frontend/    Vite React frontend
+infra/       Docker Compose stack
+scripts/     Local helpers for warmup, mock inbound email, email build
+tests/       Backend tests
 ```
 
 ## Environment
 
-Copy `.env.example` to `.env` and fill in the values you have:
+Copy the example file:
 
 ```bash
 cp .env.example .env
 ```
 
-Required for the current backend work:
+Important variables:
 
-- `OPENAI_API_KEY`
-- `LIBRETRANSLATE_URL`
-- `PUBLIC_BASE_URL`
-- `JWT_SECRET`
+```env
+OPENAI_API_KEY=
+LIBRETRANSLATE_URL=http://localhost:5000
+LIBRETRANSLATE_API_KEY=
+MAILGUN_API_KEY=
+MAILGUN_DOMAIN=
+INBOUND_EMAIL=
+PUBLIC_BASE_URL=http://localhost:5173
+ADMIN_EMAIL=admin@ai020.local
+ADMIN_PASSWORD_HASH=
+JWT_SECRET=
+```
 
-Mailgun values can stay blank for local development until the email phase.
+If `MAILGUN_API_KEY` is blank, digest emails are written to `emails/out/`.
 
-## Local Development
+## Backend
 
-Install backend dependencies with `uv`, then start the API:
+Install backend dependencies and run the API:
 
 ```bash
 make dev
 ```
 
-The backend health endpoints are:
+Useful endpoints:
 
 - `GET /health`
 - `GET /api/health`
+- `GET /api/meetings`
+- `GET /api/meetings/{id}`
+- `GET /api/meetings/{id}/summary/{lang}`
+- `GET /api/meetings/{id}/segments`
+- `GET /api/meetings/{id}/speakers`
+- `GET /api/meetings/{id}/pdf`
+- `POST /api/meetings/{id}/chat`
+- `POST /webhook/inbound`
 
-Both return `200` when LibreTranslate is reachable and `503` when it is not.
+All API errors use:
 
-## LibreTranslate Setup
-
-Start LibreTranslate locally with Docker Compose:
-
-```bash
-docker compose -f infra/docker-compose.yml up -d libretranslate
+```json
+{"error":{"code":"...","message":"...","detail":"..."}}
 ```
 
-Then run the warmup check:
+## LibreTranslate
+
+Start the local services:
+
+```bash
+docker compose -f infra/docker-compose.yml up -d libretranslate mailhog
+```
+
+Then verify translation:
 
 ```bash
 make translate-warmup
 ```
 
-What the warmup does:
-
-- waits for `LIBRETRANSLATE_URL/languages`
-- verifies `nl`, `en`, `tr`, `pl`, and `uk`
-- runs a smoke translation from Dutch to English
-
 First-run note:
 
-LibreTranslate downloads roughly 1 to 2 GB of language models the first time it boots. During that initial load, the container can look unhealthy for 3 to 5 minutes. That is expected; wait for the models to finish loading, then rerun `make translate-warmup`.
+LibreTranslate downloads roughly 1 to 2 GB of Argos models on its first boot. During that period the container can stay in `health: starting` for 3 to 5 minutes. That is expected.
 
-## Testing
+## Demo Flow
 
-Run the backend tests with:
+Seed demo subscribers:
+
+```bash
+make seed
+```
+
+Process the real 2021 Amsterdam PDF:
+
+```bash
+make process-sample
+```
+
+This writes the structured Dutch JSON to `backend/out/meeting-<id>.json` and stores translations in the database.
+
+Run the offline inbound-email demo:
+
+```bash
+make mock-inbound
+```
+
+This posts a Mailgun-shaped multipart payload to `http://localhost:8000/webhook/inbound` and generates digest HTML in `emails/out/`.
+
+## Email
+
+Build inline-styled templates:
+
+```bash
+make build-emails
+```
+
+The build step tries to download the Amsterdam logo into `emails/assets/amsterdam-logo.png`.
+
+## Frontend
+
+Install dependencies:
+
+```bash
+make frontend-install
+```
+
+Run the app:
+
+```bash
+make dev-frontend
+```
+
+The frontend expects the backend at `http://localhost:8000` unless `VITE_API_BASE_URL` is set.
+
+## Tests
+
+Run backend tests:
 
 ```bash
 make test
 ```
 
-The IDE may show import warnings if it is pointing at the system Python instead of the `uv` virtual environment. The test command uses the project environment under `backend/.venv`.
+The suite covers health checks, translation cache behavior, real PDF extraction, sample transcript ingestion, and webhook-to-digest generation.
+
+## Docker
+
+Backend Dockerfile:
+
+- `backend/Dockerfile`
+
+Compose services:
+
+- `backend`
+- `libretranslate`
+- `mailhog`
+- optional Postgres block remains commented in `infra/docker-compose.yml`
+
+## Deployment Notes
+
+- Backend: Fly.io or any container host
+- Frontend: Vercel or static hosting for Vite output
+- LibreTranslate: host with enough disk for model downloads and persistent storage
+- Mailgun: optional for real delivery; offline fallback is already built in

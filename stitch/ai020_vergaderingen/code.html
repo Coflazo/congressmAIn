@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="light" lang="nl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#831517",
+                    "on-secondary-fixed-variant": "#4e4726",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#eee2b7",
+                    "surface-tint": "#ab332f",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e5e2db",
+                    "on-primary-fixed": "#410003",
+                    "surface-container-low": "#f6f3ec",
+                    "tertiary": "#194b30",
+                    "on-primary-fixed-variant": "#8a1a1b",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#1e5035",
+                    "on-secondary-container": "#6b6340",
+                    "primary-fixed": "#ffdad6",
+                    "tertiary-container": "#326347",
+                    "surface-container-highest": "#e5e2db",
+                    "on-tertiary-container": "#a8ddb9",
+                    "primary-fixed-dim": "#ffb3ac",
+                    "outline": "#8c716e",
+                    "surface": "#fcf9f2",
+                    "surface-container": "#f1eee7",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#ece0b4",
+                    "surface-bright": "#fcf9f2",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1c1c18",
+                    "secondary-fixed-dim": "#d2c69c",
+                    "outline-variant": "#dfbfbc",
+                    "surface-container-high": "#ebe8e1",
+                    "surface-dim": "#dcdad3",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#211b02",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#665e3c",
+                    "inverse-on-surface": "#f3f0e9",
+                    "inverse-primary": "#ffb3ac",
+                    "background": "#fcf9f2",
+                    "on-primary-container": "#ffc2bc",
+                    "on-tertiary-fixed": "#002110",
+                    "on-background": "#1c1c18",
+                    "primary-container": "#a42e2b",
+                    "tertiary-fixed-dim": "#9ed2af",
+                    "tertiary-fixed": "#b9efca",
+                    "inverse-surface": "#31312c",
+                    "on-surface-variant": "#58413f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        .serif-tight {
+            font-family: 'Newsreader', serif;
+            letter-spacing: -0.02em;
+        }
+        .archival-border {
+            border-color: rgba(227, 223, 213, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full h-[64px] z-50 bg-[#FCF9F2]/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-[#E3DFD5]/20 dark:border-stone-800">
+<div class="flex justify-between items-center px-12 h-full max-w-[1200px] mx-auto">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<img alt="Gemeente Amsterdam Shield" class="h-8 w-auto" data-alt="Logo of the Municipality of Amsterdam showing three vertical crosses on a red and black shield background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo6gvew46Cr4RxYMjLeRdtDvGMlAaW7tJBvM6wByJeDGLjbTcMu8unO2D2Ol8P8HgR2Pj1LigyA1hybQxhLwgIKmhJtK6QPp98NrflJIebmT1dZ-QmV165Ek5uYtuFQcKPRX00AfYpJ3pfUc9gwsBj4IT1eZsQpguG4163lnZe2XTLsb0auEZdtY0EnPNl8mBkmznWE0YgB59QTSGNTqFoZMK9G8kxVrE5uuvdduEwWQZriqgH0xq39ToMlGmg-YHMTS5qaXMdidk"/>
+<span class="text-2xl font-serif font-bold text-[#831517] dark:text-[#A42E2B] tracking-tighter">AI020</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#831517] dark:text-[#A42E2B] border-b-2 border-[#831517] pb-1 font-bold text-sm" href="#">Vergaderingen</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors text-sm" href="#">Abonnementen</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors text-sm" href="#">Over</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 transition-colors text-sm" href="#">Admin</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 px-3 py-1 text-stone-600 hover:bg-[#F6F3EC] transition-colors rounded-sm active:scale-95">
+<span class="material-symbols-outlined">language</span>
+<span class="text-xs font-mono">NL</span>
+</button>
+<button class="flex items-center gap-2 px-3 py-1 text-stone-600 hover:bg-[#F6F3EC] transition-colors rounded-sm active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="bg-primary text-on-primary px-4 py-1.5 rounded-[4px] text-sm font-medium hover:bg-primary-container transition-colors active:scale-95">
+                    Account
+                </button>
+</div>
+</div>
+</header>
+<div class="max-w-[1200px] mx-auto pt-[64px] flex min-h-screen">
+<!-- Left Sidebar / SideNavBar -->
+<aside class="h-screen w-80 sticky top-[64px] bg-[#F6F3EC] dark:bg-stone-800/50 border-r border-[#E3DFD5] dark:border-stone-800 flex flex-col p-6 space-y-8">
+<div>
+<h2 class="text-lg font-serif text-stone-900 dark:text-stone-100 serif-tight">Vergaderingen</h2>
+<p class="text-xs font-mono text-stone-500 uppercase tracking-widest mt-1">Archiefoverzicht</p>
+</div>
+<div class="space-y-6">
+<!-- Filters Section -->
+<section class="space-y-3">
+<label class="flex items-center gap-2 text-xs font-mono text-stone-400 uppercase tracking-tighter">
+<span class="material-symbols-outlined text-[16px]">filter_list</span> Thema's
+                    </label>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-0.5 bg-secondary-container text-primary text-xs font-medium rounded-[2px] cursor-pointer hover:bg-[#E5E2DB] transition-colors">Wonen</span>
+<span class="px-2 py-0.5 bg-surface text-stone-600 border border-outline-variant/30 text-xs font-medium rounded-[2px] cursor-pointer hover:bg-secondary-container transition-colors">Klimaat</span>
+<span class="px-2 py-0.5 bg-surface text-stone-600 border border-outline-variant/30 text-xs font-medium rounded-[2px] cursor-pointer hover:bg-secondary-container transition-colors">Verkeer</span>
+</div>
+</section>
+<!-- Date Range -->
+<section class="space-y-3">
+<label class="flex items-center gap-2 text-xs font-mono text-stone-400 uppercase tracking-tighter">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span> Periode
+                    </label>
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface border-b border-outline-variant p-2">
+<span class="block text-[10px] text-stone-400">START</span>
+<input class="w-full bg-transparent border-none p-0 text-sm focus:ring-0 font-mono" type="text" value="01-01-2024"/>
+</div>
+<div class="bg-surface border-b border-outline-variant p-2">
+<span class="block text-[10px] text-stone-400">EIND</span>
+<input class="w-full bg-transparent border-none p-0 text-sm focus:ring-0 font-mono" type="text" value="31-12-2024"/>
+</div>
+</div>
+</section>
+<!-- Orgaan -->
+<section class="space-y-3">
+<label class="flex items-center gap-2 text-xs font-mono text-stone-400 uppercase tracking-tighter">
+<span class="material-symbols-outlined text-[16px]">account_balance</span> Bestuursorgaan
+                    </label>
+<div class="space-y-1">
+<label class="flex items-center gap-3 px-2 py-2 bg-[#ECE0B4] text-[#831517] rounded-sm font-semibold text-sm cursor-pointer">
+<input checked="" class="rounded-none border-primary text-primary focus:ring-0 h-3 w-3" type="checkbox"/>
+<span>Gemeenteraad</span>
+</label>
+<label class="flex items-center gap-3 px-2 py-2 text-stone-600 hover:bg-[#E5E2DB] transition-all rounded-sm text-sm cursor-pointer">
+<input class="rounded-none border-stone-300 text-primary focus:ring-0 h-3 w-3" type="checkbox"/>
+<span>Tweede Kamer</span>
+</label>
+<label class="flex items-center gap-3 px-2 py-2 text-stone-600 hover:bg-[#E5E2DB] transition-all rounded-sm text-sm cursor-pointer">
+<input class="rounded-none border-stone-300 text-primary focus:ring-0 h-3 w-3" type="checkbox"/>
+<span>Provinciale Staten</span>
+</label>
+</div>
+</section>
+</div>
+<div class="mt-auto pt-6 border-t border-outline-variant/20">
+<button class="w-full py-2 bg-stone-900 text-white text-xs font-mono uppercase tracking-widest hover:bg-stone-800 transition-colors">
+                    Wis filters
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 px-12 py-10 space-y-10">
+<!-- Search Header -->
+<div class="relative group">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-stone-400 group-focus-within:text-primary transition-colors">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest border-b-2 border-outline-variant/20 focus:border-primary transition-all focus:ring-0 text-lg serif-tight placeholder:text-stone-300" placeholder="Zoek in vergaderingen, besluiten of sprekers..." type="text"/>
+</div>
+<!-- Content Grid / Editorial List -->
+<div class="space-y-4">
+<!-- Meeting Card 1 -->
+<article class="group bg-surface-container-lowest hover:bg-surface transition-colors cursor-pointer border-l-4 border-primary">
+<div class="p-8 flex items-start gap-8">
+<div class="w-24 shrink-0 pt-1">
+<span class="block text-xs font-mono text-stone-400">12 MEI 2024</span>
+<span class="block text-[10px] font-mono text-stone-300 mt-1 uppercase tracking-tighter">09:00 - 17:00</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono bg-secondary-container px-2 py-0.5 text-on-secondary-container">GEMEENTERAAD</span>
+<span class="text-[10px] font-mono text-stone-400">Kenmerk: 2024/RA-012</span>
+</div>
+<h3 class="text-xl serif-tight font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
+                                Integrale aanpak woningbouwversnelling en herinrichting Amstelkwartier
+                            </h3>
+<p class="text-stone-600 line-clamp-2 text-sm leading-relaxed max-w-2xl">
+                                In deze sessie bespreekt de commissie de voortgang van de nieuwbouwplannen. Er wordt specifiek gekeken naar de balans tussen sociale huur en middensegment woningen in relatie tot de gestegen bouwkosten.
+                            </p>
+<div class="flex items-center gap-6 pt-2">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-surface-container text-stone-500 text-[10px] font-medium rounded-[2px]">Wonen</span>
+<span class="px-2 py-0.5 bg-surface-container text-stone-500 text-[10px] font-medium rounded-[2px]">Budget</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] font-mono text-stone-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">groups</span> 12 sprekers</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">assignment_turned_in</span> 4 besluiten</span>
+</div>
+</div>
+</div>
+<div class="pt-1 text-stone-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Meeting Card 2 -->
+<article class="group bg-surface-container-lowest hover:bg-surface transition-colors cursor-pointer border-l-4 border-stone-200">
+<div class="p-8 flex items-start gap-8">
+<div class="w-24 shrink-0 pt-1">
+<span class="block text-xs font-mono text-stone-400">10 MEI 2024</span>
+<span class="block text-[10px] font-mono text-stone-300 mt-1 uppercase tracking-tighter">14:30 - 16:00</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono bg-surface-container-highest px-2 py-0.5 text-stone-600">COMMISSIE</span>
+<span class="text-[10px] font-mono text-stone-400">Kenmerk: 2024/CM-088</span>
+</div>
+<h3 class="text-xl serif-tight font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
+                                Evaluatie Pilot Uitstootvrije Zone Binnenstad
+                            </h3>
+<p class="text-stone-600 line-clamp-2 text-sm leading-relaxed max-w-2xl">
+                                Bespreking van de eerste kwartaalcijfers betreffende de luchtkwaliteit in de Oude Zijde. De AI-samenvatting wijst op significante weerstand bij lokale logistieke ondernemers over de laadinfrastructuur.
+                            </p>
+<div class="flex items-center gap-6 pt-2">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-surface-container text-stone-500 text-[10px] font-medium rounded-[2px]">Klimaat</span>
+<span class="px-2 py-0.5 bg-surface-container text-stone-500 text-[10px] font-medium rounded-[2px]">Verkeer</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] font-mono text-stone-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">groups</span> 8 sprekers</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">assignment_turned_in</span> 1 besluit</span>
+</div>
+</div>
+</div>
+<div class="pt-1 text-stone-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</article>
+<!-- Meeting Card 3 -->
+<article class="group bg-surface-container-lowest hover:bg-surface transition-colors cursor-pointer border-l-4 border-stone-200">
+<div class="p-8 flex items-start gap-8">
+<div class="w-24 shrink-0 pt-1">
+<span class="block text-xs font-mono text-stone-400">08 MEI 2024</span>
+<span class="block text-[10px] font-mono text-stone-300 mt-1 uppercase tracking-tighter">10:00 - 12:00</span>
+</div>
+<div class="flex-1 space-y-3">
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-mono bg-surface-container-highest px-2 py-0.5 text-stone-600">STADSDEEL</span>
+<span class="text-[10px] font-mono text-stone-400">Kenmerk: 2024/SD-W</span>
+</div>
+<h3 class="text-xl serif-tight font-bold text-on-surface leading-tight group-hover:text-primary transition-colors">
+                                Vernieuwing Rembrandtpark: Groenvoorziening en Recreatie
+                            </h3>
+<p class="text-stone-600 line-clamp-2 text-sm leading-relaxed max-w-2xl">
+                                Presentatie van het definitieve ontwerp voor de zuidkant van het park. Inclusief terugkoppeling van het bewonersoverleg en budgettaire kaderstelling voor 2025.
+                            </p>
+<div class="flex items-center gap-6 pt-2">
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-surface-container text-stone-500 text-[10px] font-medium rounded-[2px]">Groen</span>
+<span class="px-2 py-0.5 bg-surface-container text-stone-500 text-[10px] font-medium rounded-[2px]">Participatie</span>
+</div>
+<div class="flex items-center gap-4 text-[11px] font-mono text-stone-400">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">groups</span> 22 sprekers</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">assignment_turned_in</span> 6 besluiten</span>
+</div>
+</div>
+</div>
+<div class="pt-1 text-stone-300 group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">arrow_forward</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Footer Meta -->
+<footer class="pt-12 pb-20 border-t border-outline-variant/10">
+<div class="flex justify-between items-center text-[10px] font-mono text-stone-400 uppercase tracking-widest">
+<p>© 2024 Gemeente Amsterdam — AI020 Archief</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Toegankelijkheid</a>
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Open Data API</a>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

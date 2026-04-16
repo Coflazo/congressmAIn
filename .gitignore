@@ -3,4 +3,34 @@
 node_modules/
 __pycache__/
 *.pyc
+*.pyo
 .venv/
+.aider*
+
+# Backend
+backend/logs/
+backend/ai020.db
+backend/storage/
+backend/out/
+backend/.mypy_cache/
+backend/.ruff_cache/
+
+# uv
+.uv/
+uv.lock
+
+# Email output (generated)
+emails/out/
+emails/assets/
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Frontend build
+frontend/dist/
+frontend/.next/
+
+# Temp files
+/tmp/ai020_*

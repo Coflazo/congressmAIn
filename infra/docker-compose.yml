@@ -1,0 +1,72 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    container_name: ai020-backend
+    env_file:
+      - ../.env
+    working_dir: /app/backend
+    command: ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ..:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - libretranslate
+      - mailhog
+    restart: unless-stopped
+
+  # ── LibreTranslate ──────────────────────────────────────────────────────────
+  libretranslate:
+    image: libretranslate/libretranslate:latest
+    container_name: ai020-libretranslate
+    user: "0:0"
+    ports:
+      - "5000:5000"
+    environment:
+      - LT_LOAD_ONLY=nl,en,tr,pl,uk
+      - LT_DISABLE_WEB_UI=false
+      - LT_UPDATE_MODELS=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5000/languages"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - libretranslate_data:/home/libretranslate/.local/share/argos-translate
+
+  # ── Mailhog — local outbound email capture ───────────────────────────────────
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ai020-mailhog
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+    restart: unless-stopped
+
+  # ── Optional Postgres (uncomment to use instead of SQLite) ───────────────────
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: ai020-postgres
+  #   environment:
+  #     POSTGRES_DB: ai020
+  #     POSTGRES_USER: ai020
+  #     POSTGRES_PASSWORD: ai020local
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U ai020"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
+
+volumes:
+  libretranslate_data:
+  # postgres_data:

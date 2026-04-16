@@ -4,27 +4,8 @@ import sys
 from pathlib import Path
 
 import pytest
-from fastapi.testclient import TestClient
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "backend"))
-
-
-@pytest.fixture()
-def client(db):
-    """TestClient with overridden DB dependency."""
-    from main import app
-    from database import get_db
-
-    def override_get_db():
-        try:
-            yield db
-        finally:
-            pass
-
-    app.dependency_overrides[get_db] = override_get_db
-    with TestClient(app, raise_server_exceptions=True) as c:
-        yield c
-    app.dependency_overrides.clear()
 
 
 def test_health_endpoint(client):

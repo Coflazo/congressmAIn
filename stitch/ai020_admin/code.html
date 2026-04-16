@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+
+<html class="light" lang="nl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI020 Admin - Het Civiel Archief</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#831517",
+                        "on-secondary-fixed-variant": "#4e4726",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#eee2b7",
+                        "surface-tint": "#ab332f",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e5e2db",
+                        "on-primary-fixed": "#410003",
+                        "surface-container-low": "#f6f3ec",
+                        "tertiary": "#194b30",
+                        "on-primary-fixed-variant": "#8a1a1b",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#1e5035",
+                        "on-secondary-container": "#6b6340",
+                        "primary-fixed": "#ffdad6",
+                        "tertiary-container": "#326347",
+                        "on-tertiary-container": "#a8ddb9",
+                        "primary-fixed-dim": "#ffb3ac",
+                        "outline": "#8c716e",
+                        "surface": "#fcf9f2",
+                        "surface-container": "#f1eee7",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#ece0b4",
+                        "surface-bright": "#fcf9f2",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1c1c18",
+                        "secondary-fixed-dim": "#d2c69c",
+                        "outline-variant": "#dfbfbc",
+                        "surface-container-high": "#ebe8e1",
+                        "surface-dim": "#dcdad3",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#211b02",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#665e3c",
+                        "inverse-on-surface": "#f3f0e9",
+                        "inverse-primary": "#ffb3ac",
+                        "background": "#fcf9f2",
+                        "on-primary-container": "#ffc2bc",
+                        "on-tertiary-fixed": "#002110",
+                        "on-background": "#1c1c18",
+                        "primary-container": "#a42e2b",
+                        "tertiary-fixed-dim": "#9ed2af",
+                        "tertiary-fixed": "#b9efca",
+                        "inverse-surface": "#31312c",
+                        "on-surface-variant": "#58413f",
+                        "line": "#E3DFD5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .hairline-border { border: 1px solid rgba(227, 223, 213, 0.4); }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-[64px] z-50 bg-[#FCF9F2]/90 backdrop-blur-md border-b border-[#E3DFD5]/20">
+<div class="flex justify-between items-center px-12 h-full max-w-[1200px] mx-auto">
+<div class="flex items-center gap-6">
+<span class="text-2xl font-serif font-bold text-[#831517] tracking-tighter">AI020</span>
+<div class="hidden md:flex items-center space-gap-6 gap-6 ml-8">
+<a class="text-stone-600 hover:text-stone-900 transition-colors duration-150 text-sm font-medium Inter" href="#">Vergaderingen</a>
+<a class="text-stone-600 hover:text-stone-900 transition-colors duration-150 text-sm font-medium Inter" href="#">Abonnementen</a>
+<a class="text-stone-600 hover:text-stone-900 transition-colors duration-150 text-sm font-medium Inter" href="#">Over</a>
+<a class="text-[#831517] border-b-2 border-[#831517] pb-1 font-bold text-sm Inter" href="#">Admin</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-stone-600 cursor-pointer hover:bg-[#F6F3EC] p-2 transition-colors">language</span>
+<span class="material-symbols-outlined text-stone-600 cursor-pointer hover:bg-[#F6F3EC] p-2 transition-colors">settings</span>
+<button class="bg-primary text-on-primary px-4 py-1.5 text-sm font-medium rounded-sm active:scale-95 transition-transform">Account</button>
+</div>
+</div>
+</nav>
+<div class="pt-[64px] max-w-[1200px] mx-auto flex min-h-[calc(100vh-64px)]">
+<!-- SideNavBar -->
+<aside class="h-screen w-80 sticky top-[64px] bg-[#F6F3EC] border-r border-[#E3DFD5] flex flex-col p-6 space-y-8">
+<div>
+<h2 class="text-lg font-serif text-stone-900">Admin Paneel</h2>
+<p class="text-xs font-mono text-stone-500 uppercase tracking-widest mt-1">Systeembeheer</p>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-[#ECE0B4] text-[#831517] rounded-sm font-semibold transition-all duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium Inter">Overzicht</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 hover:bg-stone-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium Inter">Gebruikers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 hover:bg-stone-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-medium Inter">Rapportages</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-stone-600 hover:bg-stone-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">shield_person</span>
+<span class="text-sm font-medium Inter">Rechten</span>
+</a>
+</nav>
+<div class="mt-auto pt-8 border-t border-[#E3DFD5]">
+<div class="bg-surface-container-lowest p-4 rounded-sm border border-[#E3DFD5]">
+<p class="text-[10px] font-mono text-stone-400 uppercase mb-2">Systeemstatus</p>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-tertiary"></div>
+<span class="text-xs font-medium text-stone-700">AI Engine Operational</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-8 bg-surface">
+<!-- Header Section -->
+<header class="mb-10">
+<h1 class="text-4xl font-serif tracking-tight text-on-surface mb-2">Systeemoverzicht</h1>
+<p class="text-stone-500 max-w-2xl text-sm leading-relaxed">Centraal dashboard voor het monitoren van de archivalische verwerking en abonnementsbeheer binnen de gemeente Amsterdam.</p>
+</header>
+<!-- Top KPI Row -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-10">
+<div class="bg-surface-container-low p-5 border border-line flex flex-col justify-between h-32">
+<span class="text-[10px] font-mono text-on-surface-variant uppercase tracking-tighter">Meetings Processed</span>
+<div class="flex flex-col">
+<span class="text-3xl font-mono font-medium text-primary tracking-tighter">12,842</span>
+<span class="text-[10px] font-mono text-tertiary">+12.4% vs last month</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 border border-line flex flex-col justify-between h-32">
+<span class="text-[10px] font-mono text-on-surface-variant uppercase tracking-tighter">Active Subscribers</span>
+<div class="flex flex-col">
+<span class="text-3xl font-mono font-medium text-primary tracking-tighter">4,109</span>
+<span class="text-[10px] font-mono text-stone-400">Enterprise tier: 82%</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 border border-line flex flex-col justify-between h-32">
+<span class="text-[10px] font-mono text-on-surface-variant uppercase tracking-tighter">Digest Open Rate</span>
+<div class="flex flex-col">
+<span class="text-3xl font-mono font-medium text-primary tracking-tighter">68.4%</span>
+<span class="text-[10px] font-mono text-stone-400">Avg. 4.2m reading time</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 border border-line flex flex-col justify-between h-32">
+<span class="text-[10px] font-mono text-on-surface-variant uppercase tracking-tighter">Avg Processing Time</span>
+<div class="flex flex-col">
+<span class="text-3xl font-mono font-medium text-primary tracking-tighter">01:42s</span>
+<span class="text-[10px] font-mono text-tertiary">Optimized -8s</span>
+</div>
+</div>
+</div>
+<!-- Secondary Navigation (Subscriber Tab) -->
+<div class="flex items-center gap-8 mb-6 border-b border-line">
+<button class="pb-3 text-sm font-semibold text-primary border-b-2 border-primary Inter">Meetings overzicht</button>
+<button class="pb-3 text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors Inter">Abonnees beheren</button>
+<button class="pb-3 text-sm font-medium text-stone-500 hover:text-stone-900 transition-colors Inter">Verwerkingslogs</button>
+</div>
+<!-- Data Table: List of Meetings -->
+<div class="bg-surface-container-lowest border border-line overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-4 text-[10px] font-mono text-on-surface-variant uppercase tracking-widest border-b border-line">ID</th>
+<th class="px-6 py-4 text-[10px] font-mono text-on-surface-variant uppercase tracking-widest border-b border-line">Titel</th>
+<th class="px-6 py-4 text-[10px] font-mono text-on-surface-variant uppercase tracking-widest border-b border-line">Orgaan</th>
+<th class="px-6 py-4 text-[10px] font-mono text-on-surface-variant uppercase tracking-widest border-b border-line">Datum</th>
+<th class="px-6 py-4 text-[10px] font-mono text-on-surface-variant uppercase tracking-widest border-b border-line">Status</th>
+<th class="px-6 py-4 text-[10px] font-mono text-on-surface-variant uppercase tracking-widest border-b border-line text-right">Actie</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#E3DFD5]/40">
+<!-- Row 1 -->
+<tr class="hover:bg-[#F9F7F1] transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-stone-500">AMS-2024-089</td>
+<td class="px-6 py-4 font-serif text-base text-on-surface">Begroting Stadsdeel Centrum 2025</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container px-2 py-0.5 text-[10px] font-medium rounded-[2px] Inter">Stadsdeelraad</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs">24-05-2024</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                    Ready
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:bg-primary-container/10 px-3 py-1 rounded-[2px] text-xs font-medium Inter border border-outline-variant/30 transition-all">Reprocess</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-[#F9F7F1] transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-stone-500">AMS-2024-092</td>
+<td class="px-6 py-4 font-serif text-base text-on-surface">Herinrichting Amstelstation Omgeving</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container px-2 py-0.5 text-[10px] font-medium rounded-[2px] Inter">Gemeenteraad</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs">22-05-2024</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-amber-700">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                                    Processing
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-stone-400 cursor-not-allowed px-3 py-1 rounded-[2px] text-xs font-medium Inter border border-outline-variant/10">Reprocess</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-[#F9F7F1] transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-stone-500">AMS-2024-081</td>
+<td class="px-6 py-4 font-serif text-base text-on-surface">Beleidskader Energietransitie 2030</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container px-2 py-0.5 text-[10px] font-medium rounded-[2px] Inter">Commissie Duurzaamheid</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs">19-05-2024</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-error">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                                    Failed
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:bg-primary-container/10 px-3 py-1 rounded-[2px] text-xs font-medium Inter border border-outline-variant/30 transition-all">Reprocess</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-[#F9F7F1] transition-colors group">
+<td class="px-6 py-4 font-mono text-xs text-stone-500">AMS-2024-077</td>
+<td class="px-6 py-4 font-serif text-base text-on-surface">Evaluatie Sociale Woningbouw 2023</td>
+<td class="px-6 py-4">
+<span class="bg-secondary-container px-2 py-0.5 text-[10px] font-medium rounded-[2px] Inter">Woningbouwcommissie</span>
+</td>
+<td class="px-6 py-4 font-mono text-xs">15-05-2024</td>
+<td class="px-6 py-4">
+<span class="flex items-center gap-1.5 text-xs font-medium text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                                    Ready
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary hover:bg-primary-container/10 px-3 py-1 rounded-[2px] text-xs font-medium Inter border border-outline-variant/30 transition-all">Reprocess</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Table Footer/Pagination -->
+<div class="px-6 py-4 bg-surface-container-low flex justify-between items-center border-t border-line">
+<span class="text-xs font-mono text-stone-500">Showing 1-15 of 1,204 items</span>
+<div class="flex items-center gap-2">
+<button class="p-1 border border-line text-stone-400 hover:text-stone-900 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<span class="px-3 text-xs font-mono font-medium">001</span>
+<button class="p-1 border border-line text-stone-600 hover:text-stone-900 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- System Logs or Marginalia (Asymmetric Layout) -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="md:col-span-2 space-y-6">
+<h3 class="text-xl font-serif">Recente Systeemactiviteit</h3>
+<div class="space-y-4">
+<div class="flex gap-4 items-start p-4 bg-surface-container-low border-l-2 border-primary">
+<span class="font-mono text-[10px] text-stone-400 mt-1">10:42</span>
+<div>
+<p class="text-sm font-medium Inter">Automatic digest sent to 4,109 subscribers.</p>
+<p class="text-xs text-stone-500 mt-1">Delivery success rate: 99.8%. 2 bounce-backs recorded.</p>
+</div>
+</div>
+<div class="flex gap-4 items-start p-4 bg-surface-container-low">
+<span class="font-mono text-[10px] text-stone-400 mt-1">09:15</span>
+<div>
+<p class="text-sm font-medium Inter">New meeting detected: "Zuidas Ontwikkeling Q3"</p>
+<p class="text-xs text-stone-500 mt-1">Source: Open Data API. Transcription queued.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-6">
+<h3 class="text-xl font-serif">Snelkoppelingen</h3>
+<div class="flex flex-col gap-2">
+<button class="w-full text-left p-3 border border-line hover:bg-surface-container-high transition-colors flex items-center justify-between group">
+<span class="text-sm font-medium Inter">Export Data (CSV)</span>
+<span class="material-symbols-outlined text-stone-300 group-hover:text-primary transition-colors">download</span>
+</button>
+<button class="w-full text-left p-3 border border-line hover:bg-surface-container-high transition-colors flex items-center justify-between group">
+<span class="text-sm font-medium Inter">Bulk Reprocess Failed</span>
+<span class="material-symbols-outlined text-stone-300 group-hover:text-primary transition-colors">refresh</span>
+</button>
+<button class="w-full text-left p-3 border border-line hover:bg-surface-container-high transition-colors flex items-center justify-between group">
+<span class="text-sm font-medium Inter">Update API Keys</span>
+<span class="material-symbols-outlined text-stone-300 group-hover:text-primary transition-colors">key</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

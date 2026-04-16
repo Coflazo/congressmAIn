@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="nl"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,700;1,6..72,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#831517",
+                    "on-secondary-fixed-variant": "#4e4726",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#eee2b7",
+                    "surface-tint": "#ab332f",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e5e2db",
+                    "on-primary-fixed": "#410003",
+                    "surface-container-low": "#f6f3ec",
+                    "tertiary": "#194b30",
+                    "on-primary-fixed-variant": "#8a1a1b",
+                    "on-error": "#ffffff",
+                    "on-tertiary-fixed-variant": "#1e5035",
+                    "on-secondary-container": "#6b6340",
+                    "primary-fixed": "#ffdad6",
+                    "tertiary-container": "#326347",
+                    "on-tertiary-container": "#a8ddb9",
+                    "primary-fixed-dim": "#ffb3ac",
+                    "outline": "#8c716e",
+                    "surface": "#fcf9f2",
+                    "surface-container": "#f1eee7",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#ece0b4",
+                    "surface-bright": "#fcf9f2",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "on-surface": "#1c1c18",
+                    "secondary-fixed-dim": "#d2c69c",
+                    "outline-variant": "#dfbfbc",
+                    "surface-container-high": "#ebe8e1",
+                    "surface-dim": "#dcdad3",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-fixed": "#211b02",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary": "#665e3c",
+                    "inverse-on-surface": "#f3f0e9",
+                    "inverse-primary": "#ffb3ac",
+                    "background": "#fcf9f2",
+                    "on-primary-container": "#ffc2bc",
+                    "on-tertiary-fixed": "#002110",
+                    "on-background": "#1c1c18",
+                    "primary-container": "#a42e2b",
+                    "tertiary-fixed-dim": "#9ed2af",
+                    "tertiary-fixed": "#b9efca",
+                    "inverse-surface": "#31312c",
+                    "on-surface-variant": "#58413f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"],
+                    "mono": ["JetBrains Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .font-serif { font-family: 'Newsreader', serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .hairline-border { border: 1px solid rgba(227, 223, 213, 0.4); }
+    </style>
+</head>
+<body class="bg-background text-on-surface selection:bg-secondary-container">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-[64px] z-50 bg-[#FCF9F2]/90 dark:bg-stone-900/90 backdrop-blur-md border-b border-[#E3DFD5]/20 dark:border-stone-800">
+<div class="flex justify-between items-center px-12 h-full max-w-[1200px] mx-auto">
+<div class="flex items-center gap-8">
+<a class="text-2xl font-serif font-bold text-[#831517] dark:text-[#A42E2B] tracking-tighter" href="#">AI020</a>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 text-sm font-medium transition-colors" href="#">Vergaderingen</a>
+<a class="text-[#831517] dark:text-[#A42E2B] border-b-2 border-[#831517] pb-1 font-bold text-sm" href="#">Abonnementen</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 text-sm font-medium transition-colors" href="#">Over</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-stone-900 text-sm font-medium transition-colors" href="#">Admin</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-stone-600 cursor-pointer hover:bg-[#F6F3EC] p-2 transition-colors">language</span>
+<span class="material-symbols-outlined text-stone-600 cursor-pointer hover:bg-[#F6F3EC] p-2 transition-colors">settings</span>
+<button class="ml-2 px-4 py-1.5 text-sm font-medium bg-primary text-on-primary rounded-sm active:scale-95 transition-transform">Account</button>
+</div>
+</div>
+</nav>
+<main class="pt-24 pb-20 px-12 max-w-[1200px] mx-auto min-h-screen">
+<header class="mb-12">
+<h1 class="text-4xl font-serif font-bold tracking-tight text-primary mb-2">Abonnementen</h1>
+<p class="text-on-surface-variant font-body">Beheer uw persoonlijke meldingen en AI-samenvattingen.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-10 gap-16">
+<!-- Form Section (Left 60%) -->
+<section class="lg:col-span-6 space-y-12">
+<div class="space-y-8">
+<!-- Email Input -->
+<div class="space-y-2">
+<label class="text-xs font-mono uppercase tracking-widest text-on-surface-variant">E-mailadres voor meldingen</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 text-lg font-body placeholder:text-stone-300 transition-colors" placeholder="uw@email.nl" type="email"/>
+</div>
+<!-- Language & Config -->
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="text-xs font-mono uppercase tracking-widest text-on-surface-variant">Taalvoorkeur</label>
+<select class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 text-sm font-medium appearance-none">
+<option>Nederlands</option>
+<option>English</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-mono uppercase tracking-widest text-on-surface-variant">Frequentie</label>
+<select class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 text-sm font-medium appearance-none">
+<option>Direct na vergadering</option>
+<option>Wekelijks overzicht</option>
+</select>
+</div>
+</div>
+<!-- Topics Chips -->
+<div class="space-y-4">
+<label class="text-xs font-mono uppercase tracking-widest text-on-surface-variant">Onderwerpen van interesse</label>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-secondary-container text-primary text-sm font-medium rounded-[2px] transition-all border border-transparent hover:border-primary/20">Wonen</button>
+<button class="px-4 py-2 bg-surface-container-low text-on-surface-variant text-sm font-medium rounded-[2px] transition-all border border-outline-variant hover:border-primary">Onderwijs</button>
+<button class="px-4 py-2 bg-secondary-container text-primary text-sm font-medium rounded-[2px] transition-all border border-transparent">Cultuur</button>
+<button class="px-4 py-2 bg-surface-container-low text-on-surface-variant text-sm font-medium rounded-[2px] transition-all border border-outline-variant hover:border-primary">Veiligheid</button>
+<button class="px-4 py-2 bg-surface-container-low text-on-surface-variant text-sm font-medium rounded-[2px] transition-all border border-outline-variant hover:border-primary">Zorg</button>
+</div>
+</div>
+<div class="pt-6">
+<button class="px-8 py-3 bg-primary text-on-primary font-medium text-sm tracking-wide rounded-sm hover:bg-primary-container active:scale-[0.98] transition-all">
+                            Instellingen Opslaan
+                        </button>
+</div>
+</div>
+<!-- Management Section -->
+<div class="pt-12 border-t border-[#E3DFD5]">
+<h2 class="text-xl font-serif font-bold text-on-surface mb-6">Actieve Abonnementen</h2>
+<div class="space-y-0">
+<div class="flex items-center justify-between py-4 border-b border-[#E3DFD5]/40">
+<div>
+<p class="text-sm font-semibold text-on-surface">Gemeenteraad: Wonen &amp; Bouwen</p>
+<p class="text-xs font-mono text-on-surface-variant">Geactiveerd op 12 Jan 2024</p>
+</div>
+<button class="text-xs font-medium text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant transition-colors">Opzeggen</button>
+</div>
+<div class="flex items-center justify-between py-4 border-b border-[#E3DFD5]/40">
+<div>
+<p class="text-sm font-semibold text-on-surface">Commissie: Kunst &amp; Cultuur</p>
+<p class="text-xs font-mono text-on-surface-variant">Geactiveerd op 05 Feb 2024</p>
+</div>
+<button class="text-xs font-medium text-on-surface-variant hover:text-primary underline underline-offset-4 decoration-outline-variant transition-colors">Opzeggen</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Preview Panel (Right 40%) -->
+<aside class="lg:col-span-4">
+<div class="sticky top-24">
+<div class="p-8 bg-surface-container-low border border-[#E3DFD5]/60 rounded-sm">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-sm text-primary">visibility</span>
+<h3 class="text-xs font-mono uppercase tracking-widest text-on-surface-variant">Voorbeeld van melding</h3>
+</div>
+<!-- Mini Email Mockup -->
+<div class="bg-white p-6 shadow-sm border border-[#E3DFD5]/20">
+<div class="flex items-center gap-3 mb-6">
+<img alt="Gemeente Amsterdam Logo" class="h-8 grayscale contrast-125" data-alt="Official logo of Amsterdam municipality in a clean monochromatic style for editorial use" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT3jvALAAdz-ih9D7mTqjVqk0nS5Vnq6P74w437nb4L9j9LX84XGgVLT_RTR8Xm5TS3RPiZUKhQdIJwr_X0qMhVcqEZ6JPumTOjxl-iETJpt-WYJVXxXfxA6JIKP8-z9TeHvUwRY9BgPEUR_n36dmLNilYbMCv6rpgc_tzUojVfvtgV4iqNEEnvfzoc9UI_A11vLrkeRGVYwpxMVmfjvRG-2HJ6REw7qOeyEna-PIEsYSdTrMQFJHLBrrj8X1YHHofEpmei3kkJPo"/>
+<div class="h-6 w-px bg-outline-variant"></div>
+<span class="text-[10px] font-mono text-stone-400">AI020 BRIEFING</span>
+</div>
+<h4 class="text-xl font-serif font-bold text-primary mb-3 leading-tight">Update: Commissievergadering Wonen</h4>
+<p class="text-[11px] font-mono text-on-surface-variant mb-6">DATUM: 14 MAART 2024 • 14:30</p>
+<div class="space-y-3">
+<div class="h-2 w-full bg-[#F6F3EC] rounded-full"></div>
+<div class="h-2 w-5/6 bg-[#F6F3EC] rounded-full"></div>
+<div class="h-2 w-4/6 bg-secondary-container rounded-full"></div>
+</div>
+<div class="mt-8 pt-6 border-t border-[#F6F3EC]">
+<div class="bg-secondary-container/30 p-3 rounded-sm">
+<p class="text-[12px] leading-relaxed italic text-on-secondary-fixed-variant">
+                                        "Belangrijkste besluit: De raad heeft ingestemd met de versnelde bouw van 400 sociale huurwoningen in Nieuw-West..."
+                                    </p>
+</div>
+</div>
+<div class="mt-6 flex justify-center">
+<div class="px-4 py-2 border border-primary/20 text-[10px] font-bold text-primary uppercase tracking-tighter">Lees volledige samenvatting</div>
+</div>
+</div>
+<p class="mt-6 text-[12px] leading-relaxed text-on-surface-variant italic">
+                            Dit is een visuele weergave van hoe uw samenvattingen eruit zien in uw inbox. Onze AI structureert de informatie voor maximale leesbaarheid.
+                        </p>
+</div>
+<div class="mt-8 grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-highest/50">
+<p class="text-xs font-mono text-primary font-bold mb-1">98%</p>
+<p class="text-[10px] font-medium text-on-surface-variant leading-tight">Nauwkeurigheid van AI extractie</p>
+</div>
+<div class="p-4 bg-surface-container-highest/50">
+<p class="text-xs font-mono text-primary font-bold mb-1">&lt; 5min</p>
+<p class="text-[10px] font-medium text-on-surface-variant leading-tight">Levertijd na afloop vergadering</p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<footer class="mt-20 border-t border-[#E3DFD5] bg-surface-container-low py-12 px-12">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="max-w-xs">
+<h4 class="text-lg font-serif font-bold text-primary mb-4">AI020</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Het digitale archief van de stad Amsterdam, aangedreven door transparante AI voor een betrokken burgerij.</p>
+</div>
+<div class="grid grid-cols-2 gap-12">
+<div class="space-y-3">
+<p class="text-xs font-mono font-bold uppercase tracking-widest text-on-surface">Navigatie</p>
+<ul class="text-sm space-y-2 text-on-surface-variant">
+<li><a class="hover:text-primary" href="#">Archief</a></li>
+<li><a class="hover:text-primary" href="#">Thema's</a></li>
+<li><a class="hover:text-primary" href="#">Open Data</a></li>
+</ul>
+</div>
+<div class="space-y-3">
+<p class="text-xs font-mono font-bold uppercase tracking-widest text-on-surface">Juridisch</p>
+<ul class="text-sm space-y-2 text-on-surface-variant">
+<li><a class="hover:text-primary" href="#">Privacy</a></li>
+<li><a class="hover:text-primary" href="#">Toegankelijkheid</a></li>
+<li><a class="hover:text-primary" href="#">AI Ethiek</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto mt-12 pt-8 border-t border-[#E3DFD5]/40 flex justify-between items-center">
+<p class="text-[10px] font-mono text-on-surface-variant">© 2024 GEMEENTE AMSTERDAM • BUREAU DIGITALISERING</p>
+<div class="flex gap-4">
+<img alt="Footer Logo" class="h-6 grayscale opacity-50" data-alt="Amsterdam city official coat of arms logo in soft grayscale tone as a footer watermark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqeBRkaOIsZuldZY3VODG4vOdiRi0q4KgY5htno-qRhzW4F3ostQ9dL-C1DRsJAoh30rLSDjQfewWMAzNxSzaLd0uddkv7X0fZzGONwtu2O3iGB4iz86j73bhzq7UzsbTvAZbr5kvqE58yCGFcfqFw8laSqyAfB_JuYEOOEzwoWUKKrfKxh9YmPhgOQ7lfkOxfNyKcCZVyJnUqOjuKeh1pG5wZBfGUpW6kaDVSpUoUr0alRhDym3c9wLRKMhpVxF62lz99XFmZASY"/>
+</div>
+</div>
+</footer>
+</body></html>

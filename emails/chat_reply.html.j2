@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI020 antwoord</title>
+    <style>
+      body { margin: 0; padding: 0; background: #f4f1ea; color: #1c1c18; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .wrapper { width: 100%; padding: 32px 0; }
+      .container { width: 100%; max-width: 640px; margin: 0 auto; background: #ffffff; border: 1px solid #e3dfd5; }
+      .content { padding: 32px; }
+      h1 { font-family: Georgia, "Times New Roman", serif; font-size: 28px; color: #831517; margin: 0 0 16px; }
+      .question, .answer, .citations { margin-bottom: 20px; line-height: 1.6; }
+      .pill { display: inline-block; margin-right: 8px; margin-bottom: 8px; padding: 6px 10px; background: #ece0b4; color: #665e3c; border-radius: 999px; font-size: 12px; }
+      a { color: #831517; }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="content">
+          <h1>Antwoord over {{ meeting.title }}</h1>
+          <div class="question"><strong>Vraag:</strong> {{ question }}</div>
+          <div class="answer"><strong>Antwoord:</strong> {{ answer }}</div>
+          <div class="citations">
+            <strong>Gebruikte segmenten:</strong><br />
+            {% for citation in citations %}
+            <span class="pill">segment {{ citation }}</span>
+            {% endfor %}
+          </div>
+          <div>
+            <a href="{{ public_base_url }}/meetings/{{ meeting.id }}">Open de vergadering op het platform</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
