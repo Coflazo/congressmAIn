@@ -19,7 +19,7 @@ from database import get_db
 from models import Admin, DigestDelivery, DigestDeliveryStatus, Meeting, MeetingStatus, Subscriber
 
 router = APIRouter()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["pbkdf2_sha256", "bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/admin/token")
 
 

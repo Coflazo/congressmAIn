@@ -12,6 +12,7 @@ backend/logs/
 backend/ai020.db
 backend/storage/
 backend/out/
+backend/ai020_backend.egg-info/
 backend/.mypy_cache/
 backend/.ruff_cache/
 
@@ -31,6 +32,7 @@ htmlcov/
 # Frontend build
 frontend/dist/
 frontend/.next/
+frontend/*.tsbuildinfo
 
 # Temp files
 /tmp/ai020_*
