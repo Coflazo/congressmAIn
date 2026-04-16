@@ -1,63 +1,81 @@
-# AI020 
-**AISO x AI020 Gov Tech Mini-Hackathon**
-KIT Amsterdam · April 16, 2026 · 10:55 – 15:55
+# AI020 Meeting Summarizer
 
----
-
-## The Problem
-
-Raadsvergadering (council meeting) minutes are public, but inaccessible. Sessions run 3–5 hours, written in bureaucratic Dutch, and most residents have no idea what decisions are being made that affect their neighbourhood.
-
-## The Challenge
-
-Build a comprehensive tool that makes Dutch council meetings accessible to residents. Not just a summary — a product that a gemeente or neighbourhood could actually use.
-
-This means thinking about the full picture: how the document gets in, how the AI processes it, how the output is presented, and how a user actually interacts with it.
+Municipal Meeting Summarizer turns Dutch government meeting PDFs into structured, plain-language summaries for residents. The current stack is FastAPI + SQLite on the backend, LibreTranslate for multilingual output, and a frontend that will be added in later phases.
 
 ## Repo Structure
 
+```text
+backend/        FastAPI app, database models, routers, services
+brief/          Product brief, sample transcript, expected output
+infra/          Docker Compose for local services
+scripts/        Warmup, mock inbound email, email build helpers
+skills/         Dutch gov context, plain-language rules, output schema
+tests/          Backend test suite
+stitch/         Design source files for the frontend phase
 ```
-brief/          → Problem statement, sample transcript, expected output
-skills/         → Context files: Dutch gov structure, plain-language guidelines, output schema
-CLAUDE.md       → Agent brief for Claude Code
-AGENTS.md       → Agent brief for Codex
-.cursorrules    → Agent brief for Cursor
+
+## Environment
+
+Copy `.env.example` to `.env` and fill in the values you have:
+
+```bash
+cp .env.example .env
 ```
 
-## Getting Started
+Required for the current backend work:
 
-### 1. Pick your approach
+- `OPENAI_API_KEY`
+- `LIBRETRANSLATE_URL`
+- `PUBLIC_BASE_URL`
+- `JWT_SECRET`
 
-| Level | Approach |
-|-------|----------|
-| **Non-technical** | Open this repo in Claude Code. Point it at the brief. Describe what you want in plain language — the AI writes all the code. You iterate by giving feedback. |
-| **Mixed** | Let the AI generate a first version, then read and modify the code yourself. Adjust the output schema, refine the prompt, improve the UI. |
-| **Technical** | Design the architecture yourself. Use the brief and skills files as context. AI assists, but you drive the implementation. |
+Mailgun values can stay blank for local development until the email phase.
 
-### 2. Read the brief
+## Local Development
 
-Start with [`brief/problem.md`](brief/problem.md) — it has the full problem statement, constraints, and hints.
+Install backend dependencies with `uv`, then start the API:
 
-### 3. Try the sample transcript
+```bash
+make dev
+```
 
-Use [`brief/sample-transcript.txt`](brief/sample-transcript.txt) to test your solution. Compare your output against [`brief/expected-output.md`](brief/expected-output.md).
+The backend health endpoints are:
 
-### 4. Use the skills files as context
+- `GET /health`
+- `GET /api/health`
 
-Drop the files from `skills/` into your AI tool's context. They contain domain knowledge about Dutch government structure, plain-language writing guidelines, and a suggested output schema.
+Both return `200` when LibreTranslate is reachable and `503` when it is not.
 
-## Judging Criteria
+## LibreTranslate Setup
 
-- **Does it work?** Can you demo it with the sample document?
-- **Is the output useful?** Would a resident or civil servant find real value in this?
-- **How did you direct the AI?** Show your prompt — was it clear, specific, well-structured?
-- **Pitch:** Can you explain the problem and your solution in 2 minutes?
+Start LibreTranslate locally with Docker Compose:
 
-## Timeline
+```bash
+docker compose -f infra/docker-compose.yml up -d libretranslate
+```
 
-| Time | Activity |
-|------|----------|
-| 10:55 – 11:15 | Intro + team formation. Briefs distributed. Repo cloned. |
-| 11:15 – 14:45 | Build. Develop your prototype using AI coding tools. |
-| 14:45 – 15:15 | Polish. Demo flow, edge cases, pitch prep. |
-| 15:15 – 15:55 | Demos + judging. Each team presents for 3 minutes. |
+Then run the warmup check:
+
+```bash
+make translate-warmup
+```
+
+What the warmup does:
+
+- waits for `LIBRETRANSLATE_URL/languages`
+- verifies `nl`, `en`, `tr`, `pl`, and `uk`
+- runs a smoke translation from Dutch to English
+
+First-run note:
+
+LibreTranslate downloads roughly 1 to 2 GB of language models the first time it boots. During that initial load, the container can look unhealthy for 3 to 5 minutes. That is expected; wait for the models to finish loading, then rerun `make translate-warmup`.
+
+## Testing
+
+Run the backend tests with:
+
+```bash
+make test
+```
+
+The IDE may show import warnings if it is pointing at the system Python instead of the `uv` virtual environment. The test command uses the project environment under `backend/.venv`.
