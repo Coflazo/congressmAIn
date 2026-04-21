@@ -16,9 +16,9 @@
 
 ---
 
-Dutch local government publishes hundreds of meeting minutes every month. Most residents never read them. congressmAIn changes that: forward a PDF to an email address, get back a plain-language summary in your language — with decisions, vote records, and what each outcome means for your neighbourhood.
+Dutch local government publishes hundreds of meeting minutes every month. Most residents never read them. congressmAIn tries to fix that: forward a PDF to an email address, get back a plain-language summary in your language, with decisions, vote records, and what each outcome means for your neighbourhood.
 
-The pipeline runs entirely on **free-tier LLMs** (no OpenAI account required), translates to five languages, and serves a web platform where you can read speaker quotes in context, browse decisions, and ask follow-up questions grounded in the transcript.
+It runs entirely on free-tier LLMs — no OpenAI account needed. Translations to five languages go through a self-hosted LibreTranslate instance, and there's a web platform where you can read speaker quotes in context, browse decisions, and ask follow-up questions grounded in the actual transcript.
 
 ---
 
@@ -52,16 +52,9 @@ PDF email arrives
 
 ---
 
-## Features
+## What it does
 
-| | |
-|---|---|
-| **Zero-cost AI** | Routes across 12 free LLM providers — DeepSeek, Groq, Mistral, Gemini, Cerebras, and more. Falls back automatically if any provider is down. |
-| **5 languages** | Summaries in Dutch, English, Turkish, Polish, and Ukrainian via self-hosted LibreTranslate. |
-| **PDF with speaker highlights** | Select a speaker and their passages glow in the original document. |
-| **Batched LLM pipeline** | Each agenda item gets its own B1-Dutch summary without hitting token limits. |
-| **Email delivery** | Subscribers filter by topic and language. Works fully offline (writes to disk) without Mailgun. |
-| **Hamerstuk detection** | Items passed without debate are automatically marked as uncontested. |
+Routes LLM calls across 12 free providers (DeepSeek, Groq, Mistral, Gemini, Cerebras) with automatic fallback. Translates summaries to Dutch, English, Turkish, Polish, and Ukrainian. Subscribers filter by topic and language; without a Mailgun key, emails write to disk instead of sending. Select a speaker in the web app and their passages highlight in the PDF. Agenda items passed without debate get automatically flagged as uncontested (hamerstuk).
 
 ---
 
@@ -97,13 +90,13 @@ cp api_keys.txt.example api_keys.txt
 
 ### 3. Start
 
-**With Docker (recommended for full stack):**
+With Docker:
 ```bash
 make up-full           # backend + LibreTranslate + Mailhog + LLM proxy
 make translate-warmup  # wait for Argos models (~1–2 GB, first boot only)
 ```
 
-**Without Docker (faster for development):**
+Without Docker:
 ```bash
 # Terminal 1 — LLM proxy
 make fallback-server
@@ -122,7 +115,7 @@ make seed            # create admin user + demo subscribers
 make process-sample  # run a real 2021 Amsterdam council PDF
 ```
 
-Open **http://localhost:5173** — the processed meeting will appear in the list.
+Open http://localhost:5173 — the processed meeting will appear in the list.
 
 ---
 
@@ -194,9 +187,9 @@ make test-cov  # with coverage report
 
 ## Notes
 
-**LibreTranslate first boot:** downloads ~1–2 GB of Argos language models. The container stays `health: starting` for 3–5 minutes. That's expected — run `make translate-warmup` once to confirm all languages loaded.
+LibreTranslate downloads ~1–2 GB of Argos language models on first boot. The container sits at `health: starting` for 3–5 minutes while this happens — run `make translate-warmup` once to verify all languages came up.
 
-**Mailgun:** optional. Without a key, digest emails write to `emails/out/` instead of sending. Every other feature works normally.
+Mailgun is optional. Without a key, digest emails write to `emails/out/` and everything else keeps working.
 
 ---
 
