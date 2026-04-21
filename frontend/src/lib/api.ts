@@ -6,6 +6,16 @@ type ApiErrorShape = {
   };
 };
 
+export class ApiError extends Error {
+  status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
     headers: {
@@ -17,7 +27,7 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
 
   if (!response.ok) {
     const payload = (await response.json().catch(() => ({}))) as ApiErrorShape;
-    throw new Error(payload.error?.message ?? `Request failed with ${response.status}`);
+    throw new ApiError(response.status, payload.error?.message ?? `Request failed with ${response.status}`);
   }
 
   return response.json() as Promise<T>;

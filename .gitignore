@@ -7,6 +7,10 @@ __pycache__/
 .venv/
 .aider*
 
+# API keys — never commit real keys
+api_keys.txt
+*.keys.txt
+
 # Backend
 backend/logs/
 backend/ai020.db

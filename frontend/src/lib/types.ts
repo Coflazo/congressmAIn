@@ -71,3 +71,30 @@ export type ChatResponse = {
   answer_language: string;
   citations: Array<{ segment_id: number; speaker?: string | null; text_excerpt: string }>;
 };
+
+export type AdminMetrics = {
+  meetings_processed: number;
+  meetings_processing: number;
+  meetings_failed: number;
+  avg_processing_time_seconds: number;
+  translation_cache_hit_rate: number;
+  digest_delivery_success: number;
+  active_subscribers: number;
+  top_topics: Array<{ topic: string; count: number }>;
+};
+
+export type AdminMeeting = {
+  id: number;
+  title: string;
+  date?: string | null;
+  status: string;
+  error_message?: string | null;
+};
+
+export type AdminSubscriber = {
+  id: number;
+  email: string;
+  language: string;
+  is_active: boolean;
+  created_at: string;
+};
