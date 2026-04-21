@@ -641,11 +641,14 @@ async def translate_summary(summary: MeetingSummary, db: Session, meeting_id: in
 
         async def _call(text: str) -> str:
             payload: dict[str, str] = {"q": text, "source": "nl", "target": target, "format": "text"}
-            async with semaphore:
-                async with httpx.AsyncClient(timeout=120.0) as client:
-                    response = await client.post(f"{settings.libretranslate_url}/translate", json=payload)
-                    response.raise_for_status()
-                    return response.json()["translatedText"]
+            try:
+                async with semaphore:
+                    async with httpx.AsyncClient(timeout=30.0) as client:
+                        response = await client.post(f"{settings.libretranslate_url}/translate", json=payload)
+                        response.raise_for_status()
+                        return response.json()["translatedText"]
+            except Exception:
+                return text  # LibreTranslate unavailable — keep Dutch text
 
         return list(await asyncio.gather(*[_call(text) for text in texts]))
 
