@@ -1,6 +1,28 @@
 version: "3.9"
 
 services:
+  # ── Fallback LLM server — chains 12 free providers ──────────────────────────
+  # Needs api_keys.txt; mounts it read-only from the Desktop.
+  # Start standalone with: make fallback-server
+  fallback-llm:
+    image: python:3.11-slim
+    container_name: ai020-fallback-llm
+    working_dir: /app
+    command: >
+      bash -c "pip install -q litellm fastapi 'uvicorn[standard]' &&
+               python scripts/fallback_server.py"
+    volumes:
+      - ..:/app
+      - /Users/pc/Desktop/api_keys.txt:/Users/pc/Desktop/api_keys.txt:ro
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:4000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
   backend:
     build:
       context: ..

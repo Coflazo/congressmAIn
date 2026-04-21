@@ -533,12 +533,17 @@ def _response_format_schema() -> dict[str, Any]:
     }
 
 
-def _openai_available() -> bool:
-    return bool(settings.openai_api_key and not settings.openai_api_key.startswith("sk-test") and settings.openai_api_key != "sk-proj-...")
+def _llm_available() -> bool:
+    # always try the fallback server if it's configured — it handles availability internally
+    return bool(settings.fallback_server_url)
 
 
-def maybe_refine_summary_with_openai(text: str, fallback: MeetingSummary) -> MeetingSummary:
-    if not _openai_available():
+async def maybe_refine_summary_with_openai(text: str, fallback: MeetingSummary) -> MeetingSummary:
+    """
+    try to improve the rule-based summary using the LLM.
+    if the LLM is unavailable or fails, just return the rule-based fallback — no crash.
+    """
+    if not _llm_available():
         return fallback
 
     try:
@@ -550,7 +555,7 @@ def maybe_refine_summary_with_openai(text: str, fallback: MeetingSummary) -> Mee
             "Elke beslissing moet bevatten wat is besloten, de stemming, en wat dit betekent voor bewoners.\n\n"
             f"Transcript:\n{text[:40000]}"
         )
-        completion = openai_client.chat_completion(
+        completion = await openai_client.chat_completion(
             model="gpt-4o",
             messages=[
                 {"role": "system", "content": "Je bent een zorgvuldige samenvatter van Nederlandse gemeenteraadsvergaderingen."},
@@ -561,6 +566,7 @@ def maybe_refine_summary_with_openai(text: str, fallback: MeetingSummary) -> Mee
         data = openai_client.extract_json(completion)
         return MeetingSummary.model_validate(data)
     except Exception:
+        # LLM failed — the rule-based summary is good enough to ship
         return fallback
 
 
@@ -714,7 +720,7 @@ async def _ingest_with_session(
         meeting.raw_text = raw_text
         parsed_segments = parse_segments(pages)
         summary, topics = build_rule_based_summary(raw_text)
-        summary = maybe_refine_summary_with_openai(raw_text, summary)
+        summary = await maybe_refine_summary_with_openai(raw_text, summary)
 
         meeting.title = subject or meeting.title or (summary.agenda_items[0].title if summary.agenda_items else meeting.title)
         meeting.municipality = summary.meeting.municipality

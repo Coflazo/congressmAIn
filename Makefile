@@ -1,4 +1,13 @@
-.PHONY: dev test seed process-sample mock-inbound translate-warmup build-emails lint typecheck
+.PHONY: dev test seed process-sample mock-inbound translate-warmup build-emails lint typecheck fallback-server up-full
+
+# ── Fallback LLM server ────────────────────────────────────────────────────────
+fallback-server:
+	@echo "Starting free-tier LLM fallback server on http://localhost:4000..."
+	uv run --with litellm --with fastapi --with "uvicorn[standard]" python scripts/fallback_server.py
+
+# ── Docker (full stack including fallback LLM) ─────────────────────────────────
+up-full:
+	docker compose -f infra/docker-compose.yml up -d
 
 # ── Local dev ──────────────────────────────────────────────────────────────────
 dev:

@@ -12,7 +12,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "backend"))
 
 # Use SQLite in-memory for tests
 os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
-os.environ.setdefault("OPENAI_API_KEY", "sk-test-fake")
+os.environ.setdefault("FALLBACK_SERVER_URL", "http://localhost:4000")
+os.environ.setdefault("FALLBACK_MODEL", "t0-deepseek")
+os.environ.setdefault("OPENAI_API_KEY", "sk-test-fake")  # kept so old imports don't crash
 os.environ.setdefault("LIBRETRANSLATE_URL", "http://localhost:5000")
 
 
