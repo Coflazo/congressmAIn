@@ -1,0 +1,29 @@
+# LLM provider API keys for the fallback server (LiteLLM Router)
+# Copy this file to api_keys.txt and fill in real keys.
+# The fallback server tries /Users/pc/Desktop/api_keys.txt first,
+# then ./api_keys.txt in the project root.
+#
+# Get free keys at:
+#   DeepSeek    https://platform.deepseek.com
+#   Groq        https://console.groq.com
+#   Mistral     https://console.mistral.ai
+#   Gemini      https://aistudio.google.com
+#   Cohere      https://dashboard.cohere.com
+#   Cerebras    https://cloud.cerebras.ai
+#   SambaNova   https://cloud.sambanova.ai
+#   NVIDIA NIM  https://build.nvidia.com
+#   GitHub GPT  https://github.com/settings/tokens (need Copilot)
+#   Qwen        https://dashscope.aliyuncs.com
+#
+# Format: one key per line, "PROVIDER=sk-your-key-here"
+
+DEEPSEEK_API_KEY=
+GROQ_API_KEY=
+MISTRAL_API_KEY=
+GEMINI_API_KEY=
+COHERE_API_KEY=
+CEREBRAS_API_KEY=
+SAMBANOVA_API_KEY=
+NVIDIA_API_KEY=
+GITHUB_TOKEN=
+QWEN_API_KEY=

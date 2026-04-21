@@ -1,4 +1,4 @@
-.PHONY: dev test seed process-sample mock-inbound translate-warmup build-emails lint typecheck fallback-server up-full
+.PHONY: dev test seed process-sample mock-inbound translate-warmup build-emails lint typecheck fallback-server up-full smoke-test
 
 # ── Fallback LLM server ────────────────────────────────────────────────────────
 fallback-server:
@@ -41,6 +41,10 @@ process-sample:
 # ── Mock inbound email (offline Mailgun simulation) ───────────────────────────
 mock-inbound:
 	uv run python scripts/mock_inbound.py
+
+# ── E2E smoke test (requires: make up-full first) ─────────────────────────────
+smoke-test:
+	@bash scripts/smoke_docker.sh
 
 # ── LibreTranslate warmup ──────────────────────────────────────────────────────
 translate-warmup:
