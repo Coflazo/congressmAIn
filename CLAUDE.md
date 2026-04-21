@@ -1,34 +1,70 @@
-# Municipal Meeting Summarizer — Agent Brief
+# congressmAIn — Claude Code project brief
 
-You are helping a team build a Municipal Meeting Summarizer for Dutch council meetings (raadsvergaderingen).
+Dutch government meeting PDFs → multilingual plain-language summaries, delivered by email and a React web platform.
 
-## Goal
+## Repo layout
 
-Take a Dutch council meeting transcript and produce a structured, plain-language summary that a resident can understand.
+```
+backend/        FastAPI app — routes, pipeline, models, services
+  pipeline/     ingest.py (PDF → segments → summary → translations)
+  services/     openai_client.py (httpx fallback LLM), translate.py (LibreTranslate)
+brief/          Sample PDFs and pipeline fixtures
+design/         UI mockups (Stitch HTML — visual source of truth for the frontend)
+docs/           Guides — email-setup, e2e-testing, stitch-prompt
+emails/         Jinja2 digest templates
+frontend/       Vite + React 18 + TypeScript + Tailwind
+infra/          Docker Compose (backend, fallback-llm, libretranslate, mailhog)
+scripts/        fallback_server.py, mock_inbound.py, smoke_docker.sh, translate_warmup.sh
+skills/         LLM prompt assets and output-schema.json
+tests/          pytest suite (30 tests)
+```
 
-## Context files
+## LLM setup
 
-- `brief/problem.md` — Full problem statement and constraints
-- `brief/sample-transcript.txt` — Sample transcript to test with
-- `brief/expected-output.md` — Example of what good output looks like
-- `skills/dutch-gov-structure.md` — How Dutch municipal government works
-- `skills/plain-language.md` — Guidelines for writing plain Dutch
-- `skills/output-schema.json` — Suggested structured output format
+No OpenAI or Anthropic key needed. All LLM calls go to a local LiteLLM Router proxy:
 
-## Key constraints
+```
+scripts/fallback_server.py  →  http://localhost:4000
+```
 
-- Output must be in plain Dutch (B1 language level)
-- Every decision must include: what was decided, the vote result, and what it means for residents
-- The summary must be structured, not a wall of text
-- Preserve factual accuracy — do not hallucinate details not in the transcript
+Proxy chains 12 free-tier providers. Keys live in `/Users/pc/Desktop/api_keys.txt` (not committed). Start with `make fallback-server`.
 
-## What to build
+Config vars: `FALLBACK_SERVER_URL=http://localhost:4000`, `FALLBACK_MODEL=t0-deepseek`.
 
-The team needs:
-1. A prompt that extracts structured information from a meeting transcript
-2. An output schema that organises decisions, votes, and impact
-3. A simple UI to display the results
+## Key services
 
-## Tech stack
+| Service | Default port | Start |
+|---------|-------------|-------|
+| FastAPI backend | :8000 | `make dev` |
+| Vite frontend | :5173 | `make dev-frontend` |
+| Fallback LLM proxy | :4000 | `make fallback-server` |
+| LibreTranslate | :5000 | `make up-full` |
+| Mailhog | :8025 | `make up-full` |
 
-This is a hackathon — keep it simple. A single HTML file with an API call is fine. No frameworks required.
+## Make targets
+
+```
+make dev              # FastAPI hot-reload
+make dev-frontend     # Vite dev server
+make fallback-server  # LLM proxy (uv-based, no Docker)
+make up-full          # Docker: all services
+make test             # pytest
+make seed             # bootstrap admin + demo subscribers
+make process-sample   # run brief/real-transcript-20210527.pdf through full pipeline
+make mock-inbound     # simulate inbound email (offline)
+make translate-warmup # verify LibreTranslate has nl/en/tr/pl/uk
+make smoke-test       # Docker health checks for all services
+make build-emails     # inline CSS into Jinja2 templates
+```
+
+## Design tokens
+
+All colors and spacing live in `frontend/src/styles/tokens.css`, mirrored in `tailwind.config.js`. Never hardcode colors — always `var(--token-name)` or the Tailwind class. Core palette: `--color-primary: #831517` (Amsterdam red), `--color-background: #fcf9f2` (warm paper).
+
+## Comment style
+
+Comments should read like a developer who just figured something out — direct and specific about why, not what.
+
+## E2E checks
+
+See `docs/e2e-testing.md`. Three checks: `make mock-inbound`, `make smoke-test`, `make translate-warmup`.
