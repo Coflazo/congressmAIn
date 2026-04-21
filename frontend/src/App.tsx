@@ -731,8 +731,8 @@ function SubscriptionsPage() {
       <div className="rounded-xl border border-outline-variant/40 bg-surface-low p-6">
         <div className="text-xs font-mono uppercase text-on-surface-variant">Preview</div>
         <div className="mt-4 rounded-xl border border-outline-variant/30 bg-surface-lowest p-5">
-          <div className="text-xs font-mono text-on-surface-variant">AI020 · Amsterdam</div>
-          <h2 className="mt-2 font-serif text-2xl">Raadsvergadering — AI020 Briefing</h2>
+          <div className="text-xs font-mono text-on-surface-variant">congressmAIn · Amsterdam</div>
+          <h2 className="mt-2 font-serif text-2xl">Raadsvergadering — congressmAIn</h2>
           <p className="mt-3 text-sm text-on-surface-variant leading-relaxed">
             {t("subscriptions.preview.body")}
           </p>
@@ -810,7 +810,7 @@ function AdminPage() {
   const qc = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [token, setToken] = useState<string | null>(localStorage.getItem("ai020-admin-token"));
+  const [token, setToken] = useState<string | null>(localStorage.getItem("congressmain-admin-token"));
   const [authError, setAuthError] = useState<string | null>(null);
 
   const login = useMutation({
@@ -832,7 +832,7 @@ function AdminPage() {
     onMutate: () => setAuthError(null),
     onSuccess: (data: { access_token?: string }) => {
       if (data.access_token) {
-        localStorage.setItem("ai020-admin-token", data.access_token);
+        localStorage.setItem("congressmain-admin-token", data.access_token);
         setToken(data.access_token);
         setPassword("");
       }
@@ -874,7 +874,7 @@ function AdminPage() {
     const err = metricsQuery.error ?? meetingsQuery.error ?? subscribersQuery.error;
     if (!err) return;
     if (/401|403|credentials/i.test((err as Error).message)) {
-      localStorage.removeItem("ai020-admin-token");
+      localStorage.removeItem("congressmain-admin-token");
       setToken(null);
       setAuthError(t("admin.sessionExpired"));
     }
@@ -931,7 +931,7 @@ function AdminPage() {
           </button>
           <button
             onClick={() => {
-              localStorage.removeItem("ai020-admin-token");
+              localStorage.removeItem("congressmain-admin-token");
               setToken(null);
             }}
             className="rounded-lg border border-outline-variant bg-surface-lowest px-4 py-2 text-sm hover:bg-surface-low"

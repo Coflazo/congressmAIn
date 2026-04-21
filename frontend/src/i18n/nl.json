@@ -68,9 +68,9 @@
   "subscriptions.preview.title": "Uw eerste briefing",
   "subscriptions.preview.body": "Zodra een nieuwe vergadering is verwerkt, ontvangt u een samenvatting met besluiten, stemmingen en wat het voor uw buurt betekent.",
 
-  "about.title": "AI020",
-  "about.lead": "AI020 maakt raadsvergaderingen leesbaar voor bewoners — met duidelijke samenvattingen, stemmingen en wat elk besluit voor de buurt betekent.",
-  "about.body": "AI020 maakt raadsvergaderingen leesbaar voor bewoners met duidelijke samenvattingen, stemmingen en gevolgen voor de buurt.",
+  "about.title": "congressmAIn",
+  "about.lead": "congressmAIn maakt raadsvergaderingen leesbaar voor bewoners — met duidelijke samenvattingen, stemmingen en wat elk besluit voor de buurt betekent.",
+  "about.body": "congressmAIn maakt raadsvergaderingen leesbaar voor bewoners met duidelijke samenvattingen, stemmingen en gevolgen voor de buurt.",
   "about.step1.title": "PDF insturen",
   "about.step1.desc": "Stuur de notulen-PDF naar het inbound-adres of upload direct via het systeem.",
   "about.step2.title": "Automatische verwerking",
@@ -110,5 +110,10 @@
   "common.loading": "Laden…",
   "common.error": "Er ging iets mis.",
   "common.retry": "Probeer opnieuw",
-  "common.backToMeetings": "Terug naar vergaderingen"
+  "common.backToMeetings": "Terug naar vergaderingen",
+
+  "pdf.markedPassages": "Gemarkeerde passages",
+  "pdf.help": "PDF hulp",
+  "pdf.selectSpeakerHint": "Selecteer een spreker in het tabblad 'Wie zei wat' om passages te markeren.",
+  "pdf.chatHint": "Of klik op een citaat in de AI-chat om die passage te zien."
 }

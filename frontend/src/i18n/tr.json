@@ -68,9 +68,9 @@
   "subscriptions.preview.title": "İlk brifinginiz",
   "subscriptions.preview.body": "Yeni bir toplantı işlendiğinde kararlar, oylamalar ve bölgenize etkisini içeren bir özet alacaksınız.",
 
-  "about.title": "AI020",
-  "about.lead": "AI020, belediye meclisi toplantılarını sakinler için okunabilir kılıyor — net özetler, oy sonuçları ve her kararın mahalle üzerindeki etkisiyle.",
-  "about.body": "AI020, belediye meclisi toplantılarını sakinler için açık özetler, oy sonuçları ve etkilerle anlaşılır hale getirir.",
+  "about.title": "congressmAIn",
+  "about.lead": "congressmAIn, belediye meclisi toplantılarını sakinler için okunabilir kılıyor — net özetler, oy sonuçları ve her kararın mahalle üzerindeki etkisiyle.",
+  "about.body": "congressmAIn, belediye meclisi toplantılarını sakinler için açık özetler, oy sonuçları ve etkilerle anlaşılır hale getirir.",
   "about.step1.title": "PDF Gönder",
   "about.step1.desc": "Toplantı tutanağı PDF'ini gelen kutusuna gönderin veya doğrudan sisteme yükleyin.",
   "about.step2.title": "Otomatik İşleme",
@@ -110,5 +110,10 @@
   "common.loading": "Yükleniyor…",
   "common.error": "Bir hata oluştu.",
   "common.retry": "Tekrar Dene",
-  "common.backToMeetings": "Toplantılara Dön"
+  "common.backToMeetings": "Toplantılara Dön",
+
+  "pdf.markedPassages": "İşaretli geçitler",
+  "pdf.help": "PDF yardım",
+  "pdf.selectSpeakerHint": "Geçitleri vurgulamak için 'Kim Ne Söyledi' sekmesinden bir konuşmacı seçin.",
+  "pdf.chatHint": "Ya da o geçidi görmek için AI sohbetinde bir alıntıya tıklayın."
 }

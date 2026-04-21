@@ -1,100 +1,142 @@
+<div align="center">
+
 # congressmAIn
 
-Dutch local government publishes hundreds of meeting minutes every month. Most residents never read them. congressmAIn changes that: forward a PDF to an email address, get back a plain-language summary in your language.
+**Dutch council meetings, made readable for everyone**
 
-The pipeline runs on free-tier LLMs (no paid API account required), translates to Dutch, English, Turkish, Polish, and Ukrainian via LibreTranslate, and serves a web app where you can browse speaker quotes, read decisions with voting records, and ask follow-up questions grounded in the transcript.
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React_18-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Python](https://img.shields.io/badge/Python_3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
+
+*Built at the AISO × AI020 Gov Tech Hackathon · Apr 2026 · Invited to demo with Amsterdam Municipality*
+
+</div>
+
+---
+
+Dutch local government publishes hundreds of meeting minutes every month. Most residents never read them. congressmAIn changes that: forward a PDF to an email address, get back a plain-language summary in your language — with decisions, vote records, and what each outcome means for your neighbourhood.
+
+The pipeline runs entirely on **free-tier LLMs** (no OpenAI account required), translates to five languages, and serves a web platform where you can read speaker quotes in context, browse decisions, and ask follow-up questions grounded in the transcript.
+
+---
 
 ## How it works
 
-1. A PDF lands at `ai@gov.nl` (or whatever `INBOUND_EMAIL` you configure)
-2. The pipeline extracts text and identifies who said what
-3. A structured Dutch summary is generated, then translated to five languages
-4. Subscribers get a digest email with key decisions and a link to the platform
-5. On the platform: PDF with speaker highlights, decision timeline, and an AI chat that cites specific passages
+```
+PDF email arrives
+       │
+       ▼
+┌─────────────────┐     ┌──────────────────────┐     ┌──────────────────┐
+│  Text extraction │────▶│  Speaker diarisation  │────▶│  Agenda parsing  │
+│  (pdfplumber +   │     │  (regex + heuristics) │     │  (rule-based +   │
+│   pypdf)         │     └──────────────────────┘     │   LLM refinement)│
+└─────────────────┘                                   └────────┬─────────┘
+                                                               │
+                    ┌──────────────────────────────────────────┘
+                    ▼
+          ┌──────────────────┐     ┌───────────────────┐
+          │  LiteLLM Router  │────▶│  LibreTranslate   │
+          │  12 free models  │     │  nl/en/tr/pl/uk   │
+          └──────────────────┘     └────────┬──────────┘
+                                            │
+                    ┌───────────────────────┘
+                    ▼
+       ┌────────────────────┐       ┌──────────────────┐
+       │  Digest email sent  │       │  Web platform    │
+       │  (per subscriber    │       │  PDF highlights  │
+       │   language + topic) │       │  AI chat + votes │
+       └────────────────────┘       └──────────────────┘
+```
+
+---
+
+## Features
+
+| | |
+|---|---|
+| **Zero-cost AI** | Routes across 12 free LLM providers — DeepSeek, Groq, Mistral, Gemini, Cerebras, and more. Falls back automatically if any provider is down. |
+| **5 languages** | Summaries in Dutch, English, Turkish, Polish, and Ukrainian via self-hosted LibreTranslate. |
+| **PDF with speaker highlights** | Select a speaker and their passages glow in the original document. |
+| **Batched LLM pipeline** | Each agenda item gets its own B1-Dutch summary without hitting token limits. |
+| **Email delivery** | Subscribers filter by topic and language. Works fully offline (writes to disk) without Mailgun. |
+| **Hamerstuk detection** | Items passed without debate are automatically marked as uncontested. |
+
+---
 
 ## Stack
 
-- Backend — FastAPI, SQLAlchemy 2.x, Pydantic v2, SQLite (Postgres-compatible), uv
-- AI — LiteLLM Router proxying 12 free providers (DeepSeek, Groq, Mistral, Gemini, Cerebras, and more) at localhost:4000
-- Translation — LibreTranslate (nl/en/tr/pl/uk, self-hosted in Docker)
-- Email — Mailgun for real delivery; writes to disk when key is unset
-- Frontend — Vite, React 18, TypeScript, Tailwind, Zustand, TanStack Query, `@react-pdf-viewer/core`
+```
+Backend       FastAPI · SQLAlchemy 2.x · Pydantic v2 · SQLite · uv
+AI            LiteLLM Router → 12 free providers
+Translation   LibreTranslate (Docker, self-hosted)
+Email         Mailgun / disk fallback
+Frontend      Vite · React 18 · TypeScript · Tailwind · Zustand · TanStack Query
+PDF           @react-pdf-viewer/core with custom bbox overlay renderer
+```
+
+---
 
 ## Quick start
 
-### 1. Clone and configure
+### 1. Clone
 
 ```bash
 git clone https://github.com/Coflazo/congressmAIn.git
 cd congressmAIn
-cp .env.example .env
+cp .env.example .env          # set JWT_SECRET and ADMIN_PASSWORD_HASH
 ```
 
-Set at minimum `JWT_SECRET` and `ADMIN_PASSWORD_HASH` in `.env`. Everything else defaults to local development values.
-
-### 2. LLM keys
-
-congressmAIn doesn't need an OpenAI or Anthropic account. Copy the key template and fill in at least one free-tier key:
+### 2. LLM keys (free accounts only)
 
 ```bash
 cp api_keys.txt.example api_keys.txt
-# edit api_keys.txt
+# fill in at least one: DeepSeek · Groq · Mistral · Gemini
 ```
 
-Free accounts worth having: [DeepSeek](https://platform.deepseek.com) · [Groq](https://console.groq.com) · [Mistral](https://console.mistral.ai) · [Gemini](https://aistudio.google.com)
+### 3. Start
 
-### 3. Start services
-
+**With Docker (recommended for full stack):**
 ```bash
-make up-full           # Docker: backend, LibreTranslate, Mailhog, fallback LLM
-make translate-warmup  # wait for LibreTranslate models (~1–2 GB, first boot only)
+make up-full           # backend + LibreTranslate + Mailhog + LLM proxy
+make translate-warmup  # wait for Argos models (~1–2 GB, first boot only)
 ```
 
-Or run components individually without Docker:
-
+**Without Docker (faster for development):**
 ```bash
-make fallback-server   # LLM proxy on :4000
-make dev               # FastAPI on :8000
-make dev-frontend      # Vite on :5173
+# Terminal 1 — LLM proxy
+make fallback-server
+
+# Terminal 2 — FastAPI backend
+make dev
+
+# Terminal 3 — React frontend
+make dev-frontend
 ```
 
 ### 4. Try it
 
 ```bash
-make seed           # create admin user and demo subscribers
-make process-sample # run a real 2021 Amsterdam PDF through the full pipeline
-make mock-inbound   # simulate an inbound email with that PDF
+make seed            # create admin user + demo subscribers
+make process-sample  # run a real 2021 Amsterdam council PDF
 ```
 
-Then open http://localhost:5173.
+Open **http://localhost:5173** — the processed meeting will appear in the list.
 
-## Repo layout
-
-```
-backend/     FastAPI app — routes, pipeline, models, services
-brief/       Sample PDFs and pipeline fixtures
-design/      UI mockups (Stitch HTML files, visual source of truth)
-docs/        Guides — email setup, E2E testing, design prompt
-emails/      Jinja2 digest templates and generated output
-frontend/    React + Vite app
-infra/       Docker Compose stack
-scripts/     Helpers — fallback LLM server, mock inbound, warmup, smoke tests
-skills/      LLM prompt assets and structured output schema
-tests/       Backend test suite
-```
+---
 
 ## Environment variables
 
 ```env
-# LLM fallback
+# LLM
 FALLBACK_SERVER_URL=http://localhost:4000
 FALLBACK_MODEL=t0-deepseek
 
 # Translation
 LIBRETRANSLATE_URL=http://localhost:5000
-LIBRETRANSLATE_API_KEY=
 
-# Email
+# Email (optional — omit to use disk fallback)
 MAILGUN_API_KEY=
 MAILGUN_DOMAIN=
 INBOUND_EMAIL=
@@ -106,7 +148,7 @@ ADMIN_PASSWORD_HASH=
 JWT_SECRET=
 ```
 
-When `MAILGUN_API_KEY` is not set, digest emails write to `emails/out/` instead of sending. Everything else keeps working.
+---
 
 ## API
 
@@ -122,59 +164,44 @@ POST /api/meetings/{id}/chat
 POST /webhook/inbound
 ```
 
-Errors always return `{"error": {"code": "...", "message": "...", "detail": "..."}}`.
+---
+
+## Repo layout
+
+```
+backend/     FastAPI app — routes, pipeline, models, services
+brief/       Sample PDFs and fixtures
+design/      UI mockups (Stitch HTML — visual source of truth)
+docs/        Email setup, E2E testing, design prompt
+emails/      Jinja2 digest templates + generated output
+frontend/    React + Vite app
+infra/       Docker Compose stack
+scripts/     LLM proxy, mock inbound, warmup, smoke tests
+skills/      LLM prompts and output schema
+tests/       30-test backend suite
+```
+
+---
 
 ## Tests
 
 ```bash
-make test       # full suite
-make test-cov   # with coverage report
+make test      # full suite (30 tests)
+make test-cov  # with coverage report
 ```
 
-30 tests covering health endpoints, translation caching, PDF extraction, pipeline ingestion, and the full webhook-to-digest flow.
+---
 
-## End-to-end checks
+## Notes
 
-See `docs/e2e-testing.md` for the three manual smoke tests: mock inbound email, Docker stack, and LibreTranslate warmup.
+**LibreTranslate first boot:** downloads ~1–2 GB of Argos language models. The container stays `health: starting` for 3–5 minutes. That's expected — run `make translate-warmup` once to confirm all languages loaded.
 
-```bash
-# Terminal 1 — backend running
-make dev
+**Mailgun:** optional. Without a key, digest emails write to `emails/out/` instead of sending. Every other feature works normally.
 
-# Terminal 2 — E2E checks
-make mock-inbound
-make up-full && bash scripts/smoke_docker.sh
-make translate-warmup
-```
+---
 
-## Email setup
+<div align="center">
 
-`docs/email-setup.md` covers Mailgun sandbox setup (about 10 minutes, no DNS required) and connecting a custom domain.
+Made in Amsterdam · AISO × AI020 Gov Tech Hackathon · Apr 2026
 
-Short version: `make mock-inbound` works fully offline. For real email, create a free Mailgun sandbox and point a receiving route at `/webhook/inbound`.
-
-## LibreTranslate
-
-On first boot, LibreTranslate downloads Argos translation models for nl, en, tr, pl, and uk — roughly 1–2 GB total. The container sits in `health: starting` for 3–5 minutes while this happens. That's expected. Run `make translate-warmup` once to confirm all languages loaded correctly.
-
-## Docker
-
-```bash
-make up-full    # start all services
-make down       # stop
-```
-
-Services: `backend`, `fallback-llm`, `libretranslate`, `mailhog`. Optional Postgres block is commented out in `infra/docker-compose.yml` if you want to swap away from SQLite.
-
-## Deploy
-
-- Backend: Fly.io or any container host
-- Frontend: Vercel or any static host (`make frontend-build` produces `frontend/dist/`)
-- LibreTranslate: needs a persistent volume with ~3 GB for model storage
-- Mailgun: optional — disk fallback works fine without it
-
-## Design
-
-Mockups live in `design/`. Each subfolder is a standalone HTML file from Google Stitch. The React frontend in `frontend/` is a direct conversion with the same design tokens.
-
-To regenerate or iterate on a screen, use the prompt in `docs/stitch-prompt.md`.
+</div>

@@ -4,6 +4,7 @@
  * uses renderPage from @react-pdf-viewer/core to inject custom overlay divs per page.
  */
 import { useEffect, useRef, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import pdfWorkerUrl from "pdfjs-dist/build/pdf.worker.min.js?url";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import type { RenderPageProps } from "@react-pdf-viewer/core";
@@ -42,6 +43,7 @@ function HighlightBox({ bbox, label }: { bbox: BBox; label?: string }) {
 
 export function PdfPanel({ meetingId, segments }: PdfPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
 
   // group segments by page so we can look them up quickly inside renderPage
   const segmentsByPage = useMemo(() => {
@@ -136,13 +138,13 @@ export function PdfPanel({ meetingId, segments }: PdfPanelProps) {
       {/* Sidebar — shows highlighted segments with page jump links */}
       <aside className="rounded-lg border border-outline-variant/50 bg-surface-low p-4">
         <h3 className="mb-3 font-serif text-xl text-on-surface">
-          {hasHighlights ? "Gemarkeerde passages" : "PDF hulp"}
+          {hasHighlights ? t("pdf.markedPassages") : t("pdf.help")}
         </h3>
 
         {hasHighlights ? (
           <div className="space-y-3">
             <p className="text-xs text-on-surface-variant">
-              {segments.length} passage{segments.length !== 1 ? "s" : ""} gemarkeerd
+              {segments.length} {t("pdf.markedPassages").toLowerCase()}
             </p>
             {segments.map((seg) => (
               <button
@@ -162,7 +164,7 @@ export function PdfPanel({ meetingId, segments }: PdfPanelProps) {
                 className="w-full rounded border border-outline-variant/40 bg-surface-lowest p-3 text-left transition hover:border-primary/30 hover:bg-primary/5"
               >
                 <div className="mb-1 text-xs font-mono uppercase text-primary">
-                  pagina {seg.page ?? "?"} · {seg.intent}
+                  {t("detail.page")} {seg.page ?? "?"} · {seg.intent}
                 </div>
                 {seg.speaker && (
                   <div className="text-sm font-medium">
@@ -179,10 +181,8 @@ export function PdfPanel({ meetingId, segments }: PdfPanelProps) {
         ) : (
           // shown when no speaker is selected
           <div className="space-y-3 text-sm text-on-surface-variant">
-            <p>Selecteer een spreker in het tabblad "Wie zei wat" om hun passages te markeren.</p>
-            <p className="text-xs">
-              Of klik op een citaat in de AI-chat om die passage te zien.
-            </p>
+            <p>{t("pdf.selectSpeakerHint")}</p>
+            <p className="text-xs">{t("pdf.chatHint")}</p>
           </div>
         )}
       </aside>

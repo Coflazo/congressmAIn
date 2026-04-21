@@ -27,7 +27,7 @@ export function Layout({ children }: PropsWithChildren) {
     <div className="min-h-screen bg-background text-on-surface">
       <header className="sticky top-0 z-20 border-b border-outline-variant/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
         <div className="mx-auto max-w-6xl px-4 md:px-8">
-          {/* Top bar: Amsterdam logo + AI020 wordmark + lang switcher */}
+          {/* Top bar: Amsterdam logo + congressmAIn wordmark + lang switcher */}
           <div className="flex h-14 items-center gap-3">
             <img
               src={AMSTERDAM_LOGO}
@@ -40,7 +40,7 @@ export function Layout({ children }: PropsWithChildren) {
               to="/meetings"
               className="font-serif text-2xl font-bold tracking-tight text-primary hover:opacity-80"
             >
-              AI020
+              congressmAIn
             </Link>
             <div className="ml-auto flex items-center gap-1">
               {LANGS.map(({ code, label }) => (

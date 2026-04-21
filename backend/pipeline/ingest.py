@@ -382,9 +382,9 @@ def _parse_parties_present(text: str) -> list[dict[str, Any]]:
 
 def parse_meeting_meta(text: str) -> MeetingMeta:
     municipality = None
-    municipality_match = re.search(r"Gemeente\s+([A-Za-zÀ-ÿ\-\s]+)", text)
+    municipality_match = re.search(r"Gemeente\s+([A-Za-zÀ-ÿ\-]+(?:\s[A-Za-zÀ-ÿ\-]+)*)", text)
     if municipality_match:
-        municipality = municipality_match.group(1).strip()
+        municipality = municipality_match.group(1).split("\n")[0].strip()
 
     date = None
     for pattern in [r"Datum:\s*([^\n]+)", r"Vergaderdatum\s+([^\n]+)"]:
@@ -477,12 +477,19 @@ def build_rule_based_summary(text: str) -> tuple[MeetingSummary, list[str]]:
             elif "motie" in vote.title.lower():
                 motions.append(record)
 
+        if re.search(r"gehamerd", block, re.IGNORECASE):
+            decision_val = "hamerstuk"
+        elif final_vote and final_vote.result:
+            decision_val = final_vote.result
+        else:
+            decision_val = "geen_stemming"
+
         agenda_items.append(
             AgendaItem(
                 number=number,
                 title=title.title(),
                 topic_summary=topic_summary or title,
-                decision=final_vote.result if final_vote and final_vote.result else "geen_stemming",
+                decision=decision_val,
                 decision_detail=decision_detail or title,
                 votes=final_vote.votes if final_vote else None,
                 amendments=amendments,
@@ -538,35 +545,90 @@ def _llm_available() -> bool:
     return bool(settings.fallback_server_url)
 
 
+async def _refine_agenda_items_with_llm(
+    items: list[AgendaItem],
+    text_chunks: dict[int, str],
+) -> list[AgendaItem]:
+    """
+    Rewrite only the 3 text fields per item (topic_summary, resident_impact, decision_detail)
+    using batched LLM calls (5 items per batch) so each call fits in ~2000 output tokens.
+    Structured rule-based fields (votes, amendments, motions, cost) are preserved unchanged.
+    """
+    BATCH_SIZE = 5
+    refined = list(items)
+
+    for start in range(0, len(items), BATCH_SIZE):
+        batch = items[start : start + BATCH_SIZE]
+        batch_input = [
+            {
+                "number": item.number,
+                "title": item.title,
+                "raw_text": text_chunks.get(item.number, "")[:1500],
+            }
+            for item in batch
+        ]
+
+        system_msg = (
+            "Je bent een expert in het samenvatten van Nederlandse gemeenteraadsvergaderingen. "
+            "Schrijf in eenvoudig Nederlands op B1-niveau — begrijpelijk voor elke Amsterdammer. "
+            "Kortste zinnen, actieve werkwoorden, concreet effect voor bewoners.\n\n"
+            "Geef voor elk agendapunt een JSON object met:\n"
+            "  number: (integer, zelfde als input)\n"
+            "  topic_summary: (1 heldere zin, max 20 woorden, wat er besproken/besloten is)\n"
+            "  resident_impact: (1 zin, concreet effect op Amsterdamse bewoners)\n"
+            "  decision_detail: (2-3 zinnen uitleg van het besluit)\n\n"
+            "Respond ONLY with a JSON array of these objects. No markdown."
+        )
+        user_msg = f"Agendapunten:\n{json.dumps(batch_input, ensure_ascii=False, indent=2)}"
+
+        try:
+            completion = await openai_client.chat_completion(
+                model=settings.fallback_model,
+                messages=[
+                    {"role": "system", "content": system_msg},
+                    {"role": "user", "content": user_msg},
+                ],
+                max_tokens=2048,
+                temperature=0.3,
+            )
+            data = openai_client.extract_json(completion)
+            if isinstance(data, list):
+                refined_map = {r["number"]: r for r in data if isinstance(r, dict) and "number" in r}
+                for i, item in enumerate(refined):
+                    if item.number in refined_map:
+                        r = refined_map[item.number]
+                        updates: dict[str, Any] = {}
+                        if r.get("topic_summary"):
+                            updates["topic_summary"] = r["topic_summary"]
+                        if r.get("resident_impact"):
+                            updates["resident_impact"] = r["resident_impact"]
+                        if r.get("decision_detail"):
+                            updates["decision_detail"] = r["decision_detail"]
+                        if updates:
+                            refined[i] = item.model_copy(update=updates)
+        except Exception:
+            pass  # keep rule-based for this batch
+
+    return refined
+
+
 async def maybe_refine_summary_with_openai(text: str, fallback: MeetingSummary) -> MeetingSummary:
     """
-    try to improve the rule-based summary using the LLM.
-    if the LLM is unavailable or fails, just return the rule-based fallback — no crash.
+    Improve the rule-based summary using batched LLM calls (5 items per call).
+    Falls back gracefully on any error.
     """
-    if not _llm_available():
+    if not _llm_available() or not fallback.agenda_items:
         return fallback
 
     try:
-        prompt = (
-            "Maak een feitelijke samenvatting van deze Nederlandse raadsvergadering. "
-            "Gebruik alleen informatie uit het transcript. "
-            "Schrijf in eenvoudig Nederlands op B1-niveau. "
-            "Volg het JSON-schema exact. "
-            "Elke beslissing moet bevatten wat is besloten, de stemming, en wat dit betekent voor bewoners.\n\n"
-            f"Transcript:\n{text[:40000]}"
-        )
-        completion = await openai_client.chat_completion(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": "Je bent een zorgvuldige samenvatter van Nederlandse gemeenteraadsvergaderingen."},
-                {"role": "user", "content": prompt},
-            ],
-            response_format=_response_format_schema(),
-        )
-        data = openai_client.extract_json(completion)
-        return MeetingSummary.model_validate(data)
+        text_chunks: dict[int, str] = {}
+        for number, title, block in _agenda_matches(text):
+            if number is not None:
+                text_chunks[number] = block[:1500]
+
+        refined_items = await _refine_agenda_items_with_llm(fallback.agenda_items, text_chunks)
+        return fallback.model_copy(update={"agenda_items": refined_items})
     except Exception:
-        # LLM failed — the rule-based summary is good enough to ship
         return fallback
 
 

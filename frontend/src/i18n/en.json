@@ -68,9 +68,9 @@
   "subscriptions.preview.title": "Your first briefing",
   "subscriptions.preview.body": "Once a new meeting is processed, you will receive a summary with decisions, votes, and what it means for your neighbourhood.",
 
-  "about.title": "AI020",
-  "about.lead": "AI020 makes council meetings readable for residents — with clear summaries, vote results, and what each decision means for the neighbourhood.",
-  "about.body": "AI020 makes council meetings readable for residents with clear summaries, vote results, and local impact.",
+  "about.title": "congressmAIn",
+  "about.lead": "congressmAIn makes council meetings readable for residents — with clear summaries, vote results, and what each decision means for the neighbourhood.",
+  "about.body": "congressmAIn makes council meetings readable for residents with clear summaries, vote results, and local impact.",
   "about.step1.title": "Submit PDF",
   "about.step1.desc": "Send the meeting minutes PDF to the inbound address or upload directly via the system.",
   "about.step2.title": "Auto-processing",
@@ -110,5 +110,10 @@
   "common.loading": "Loading…",
   "common.error": "Something went wrong.",
   "common.retry": "Try again",
-  "common.backToMeetings": "Back to meetings"
+  "common.backToMeetings": "Back to meetings",
+
+  "pdf.markedPassages": "Marked passages",
+  "pdf.help": "PDF help",
+  "pdf.selectSpeakerHint": "Select a speaker in the 'Who Said What' tab to highlight passages.",
+  "pdf.chatHint": "Or click a quote in the AI chat to view that passage."
 }

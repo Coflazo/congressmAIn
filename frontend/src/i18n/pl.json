@@ -68,9 +68,9 @@
   "subscriptions.preview.title": "Twój pierwszy briefing",
   "subscriptions.preview.body": "Po przetworzeniu nowego posiedzenia otrzymasz streszczenie z decyzjami, głosowaniami i ich wpływem na Twoją okolicę.",
 
-  "about.title": "AI020",
-  "about.lead": "AI020 sprawia, że posiedzenia rady są czytelne dla mieszkańców — z przejrzystymi podsumowaniami, wynikami głosowań i znaczeniem każdej decyzji.",
-  "about.body": "AI020 ułatwia mieszkańcom zrozumienie posiedzeń rady dzięki jasnym podsumowaniom, głosowaniom i opisowi skutków.",
+  "about.title": "congressmAIn",
+  "about.lead": "congressmAIn sprawia, że posiedzenia rady są czytelne dla mieszkańców — z przejrzystymi podsumowaniami, wynikami głosowań i znaczeniem każdej decyzji.",
+  "about.body": "congressmAIn ułatwia mieszkańcom zrozumienie posiedzeń rady dzięki jasnym podsumowaniom, głosowaniom i opisowi skutków.",
   "about.step1.title": "Prześlij PDF",
   "about.step1.desc": "Wyślij PDF protokołu posiedzenia na adres przychodzący lub wgraj bezpośrednio do systemu.",
   "about.step2.title": "Automatyczne przetwarzanie",
@@ -110,5 +110,10 @@
   "common.loading": "Ładowanie…",
   "common.error": "Wystąpił błąd.",
   "common.retry": "Spróbuj ponownie",
-  "common.backToMeetings": "Wróć do posiedzeń"
+  "common.backToMeetings": "Wróć do posiedzeń",
+
+  "pdf.markedPassages": "Zaznaczone fragmenty",
+  "pdf.help": "Pomoc PDF",
+  "pdf.selectSpeakerHint": "Wybierz mówcę w zakładce 'Kto Co Powiedział', aby wyróżnić fragmenty.",
+  "pdf.chatHint": "Lub kliknij cytat w czacie AI, aby zobaczyć ten fragment."
 }
