@@ -10,7 +10,7 @@
 [![Python](https://img.shields.io/badge/Python_3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 
-*Built at the AISO × AI020 Gov Tech Hackathon · Apr 2026 · Invited to demo with Amsterdam Municipality*
+*Winner of the AISO × AI020 Gov Tech Hackathon (Apr 2026). Invited to demo with the Amsterdam Municipality.*
 
 </div>
 
